@@ -23,6 +23,13 @@
 # Any file in /RawContent dir will be managed by git lfs.
 !/RawContent/**/*
 
+# My Igonre
+ArenaBattle/.vs/*
+ArenaBattle/Binaries/*
+ArenaBattle/Intermediate/*
+ArenaBattle/DerivedDataCache/*
+
+
 # OS/platform generated files.
 
 # Windows

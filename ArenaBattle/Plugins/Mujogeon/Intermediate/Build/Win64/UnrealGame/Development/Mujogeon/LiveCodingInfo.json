@@ -1,0 +1,22 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.Mujogeon.cpp.obj": [
+			"ConfigData.gen.cpp.obj",
+			"ConfigManager.gen.cpp.obj",
+			"DebugHUD.gen.cpp.obj",
+			"DebugManager.gen.cpp.obj",
+			"DebugViewer.gen.cpp.obj",
+			"Mujogeon.init.gen.cpp.obj",
+			"SettingUI.gen.cpp.obj",
+			"Toast.gen.cpp.obj",
+			"ConfigManager.cpp.obj",
+			"DebugHUD.cpp.obj",
+			"DebugManager.cpp.obj",
+			"DebugViewer.cpp.obj",
+			"Mujogeon.cpp.obj",
+			"SettingUI.cpp.obj",
+			"Toast.cpp.obj"
+		]
+	}
+}

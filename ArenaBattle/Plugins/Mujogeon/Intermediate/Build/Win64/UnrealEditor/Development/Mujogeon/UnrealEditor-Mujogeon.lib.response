@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-Mujogeon.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"E:\Learn\UE\UE5Part2_git\UE5_Part2\ArenaBattle\Intermediate\Build\Win64\ArenaBattleEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"E:\Learn\UE\UE5Part2_git\UE5_Part2\ArenaBattle\Plugins\Mujogeon\Intermediate\Build\Win64\UnrealEditor\Development\Mujogeon\Module.Mujogeon.cpp.obj"
+"E:\Learn\UE\UE5Part2_git\UE5_Part2\ArenaBattle\Plugins\Mujogeon\Intermediate\Build\Win64\UnrealEditor\Development\Mujogeon\Default.rc2.res"
+/OUT:"E:\Learn\UE\UE5Part2_git\UE5_Part2\ArenaBattle\Plugins\Mujogeon\Intermediate\Build\Win64\UnrealEditor\Development\Mujogeon\UnrealEditor-Mujogeon.lib"

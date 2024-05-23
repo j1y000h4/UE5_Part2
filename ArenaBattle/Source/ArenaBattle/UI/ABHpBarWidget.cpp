@@ -3,6 +3,7 @@
 
 #include "UI/ABHpBarWidget.h"
 #include "Components/ProgressBar.h"
+#include "Interface/ABCharacterWidgetInterface.h"
 
 UABHpBarWidget::UABHpBarWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -17,6 +18,12 @@ void UABHpBarWidget::NativeConstruct()
 	// 아까 PbHpBar라고 Canvas에 설정함
 	HpProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PbHpBar")));
 	ensure(HpProgressBar);
+
+	IABCharacterWidgetInterface* CharacterWidget = Cast<IABCharacterWidgetInterface>(OwningActor);
+	if (CharacterWidget)
+	{
+		CharacterWidget->SetupCharacterWidget(this);
+	}
 }
 
 void UABHpBarWidget::UpdateHpBar(float NewCurrentHp)

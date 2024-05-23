@@ -5,7 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Interface/ABAnimationAttackInterface.h"
+#include "Interface/ABCharacterWidgetInterface.h"
+#include "Interface/ABCharacterItemInterface.h"
 #include "ABCharacterBase.generated.h"
+
+// 확인용 로그
+DECLARE_LOG_CATEGORY_EXTERN(LogABCharacter, Log, All);
 
 UENUM()
 enum class ECharacterControlType : uint8
@@ -14,14 +19,32 @@ enum class ECharacterControlType : uint8
 	Quater
 };
 
+// 아이템을 처리할 수 있게 델리게이트 선언
+// 해당 델리게이트의 경우 다수를 배열로 관리하려고 한다. 이것 자체를 인자로 쓸 수가 없다.
+// 이것을 배열로 관리하기위해서 쉬운 방법은 이것을 감싸는 구조체를 하나 만들어 주는것
+DECLARE_DELEGATE_OneParam(FOnTakeItemDelegate, class UABItemData* /*InItemData*/);
+
+USTRUCT(BlueprintType)
+struct FTakeItemDelegateWrapper
+{
+	GENERATED_BODY()
+	FTakeItemDelegateWrapper(){}		// 생성자
+	FTakeItemDelegateWrapper(const FOnTakeItemDelegate& InItemDelegate) : ItemDelegate(InItemDelegate){}		// 인자를 받는 생성자
+	
+	FOnTakeItemDelegate ItemDelegate;
+};
+
 UCLASS()
-class ARENABATTLE_API AABCharacterBase : public ACharacter, public IABAnimationAttackInterface		// 인터페이스 상속
+class ARENABATTLE_API AABCharacterBase : public ACharacter, public IABAnimationAttackInterface, public IABCharacterWidgetInterface, public IABCharacterItemInterface		// 인터페이스 상속
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
 	AABCharacterBase();		// 생성자
+
+	// BeginPlay()가 시작되기 전에 Stat의 델리게이트를 등록해서 죽었을때 죽는 모션을 수행하도록 처리
+	virtual void PostInitializeComponents() override;	
 
 protected:
 	virtual void SetCharacterControlData(const class UABCharacterControlData* CharacterControlData);		// Data세팅 함수
@@ -75,5 +98,23 @@ protected:
 // UI Widget Section
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UWidgetComponent> HpBar;
+	TObjectPtr<class UABWidgetComponent> HpBar;
+
+	// 인터페이스를 상속받았으니, 의무적으로 기능을 구현해야 함
+	virtual void SetupCharacterWidget(class UABUserWidget* InUserWidget) override;
+
+// Item Section
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Equipment, Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<class USkeletalMeshComponent> Weapon;
+
+	//FTakeItemDelegateWrapper를 관리해줄 수 있는 배열 선언 (TakeItemActions)
+	UPROPERTY()
+	TArray<FTakeItemDelegateWrapper> TakeItemActions;
+
+	virtual void TakeItem(class UABItemData* InItemData) override;
+	// TakeItemActions에 바인딩될 함수들
+	virtual void DrinkPostion(class UABItemData* InItemData);
+	virtual void EquipWeapon(class UABItemData* InItemData);
+	virtual void ReadScroll(class UABItemData* InItemData);
 };
