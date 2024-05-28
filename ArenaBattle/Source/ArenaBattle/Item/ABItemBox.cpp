@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Item/ABItemBox.h"
@@ -7,25 +7,27 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Physics/ABCollision.h"
 #include "Interface/ABCharacterItemInterface.h"
+#include "Engine/AssetManager.h"		// ì—ì…‹ ë§¤ë‹ˆì € í—¤ë” ì¶”ê°€
+#include "ABItemData.h"
 
 // Sets default values
 AABItemBox::AABItemBox()
 {
-	// ¾×ÅÍ ±¸¼º
+	// ì•¡í„° êµ¬ì„±
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("TriggerBox"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Effect = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Effect"));
 
-	// ·çÆ® ÄÄÆ÷³ÍÆ® ¼³Á¤
+	// ë£¨íŠ¸ ì»´í¬ë„ŒíŠ¸ ì„¤ì •
 	RootComponent = Trigger;
 	Mesh->SetupAttachment(Trigger);
 	Effect->SetupAttachment(Trigger);
 
-	// Æ®¸®°ÅÀÇ Äİ¸®Àü ¼³Á¤
+	// íŠ¸ë¦¬ê±°ì˜ ì½œë¦¬ì „ ì„¤ì •
 	Trigger->SetCollisionProfileName(CPROFILE_ABTRIGGER);
 	Trigger->SetBoxExtent(FVector(40.0f, 42.0f, 30.0f));
 
-	// ¿À¹ö·¦µÇ¸é ¹ß»ı½ÃÅ³ ÇÔ¼ö ¹ÙÀÎµù
+	// ì˜¤ë²„ë©ë˜ë©´ ë°œìƒì‹œí‚¬ í•¨ìˆ˜ ë°”ì¸ë”©
 	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnOverlapBegin);
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> BoxMeshRef(TEXT("/Script/Engine.StaticMesh'/Game/ArenaBattle/Environment/Props/SM_Env_Breakables_Box1.SM_Env_Breakables_Box1'"));
@@ -44,18 +46,45 @@ AABItemBox::AABItemBox()
 	}
 }
 
-// ¹ÙÀÎµù µÈ ÇÔ¼ö ¼³Á¤ ¹× ·ÎÁ÷ ±¸¼º
-// ¾ÆÀÌÅÛ È¹µæÇßÀ» ¶§
+// ItemBoxê°€ ì´ˆê¸°í™”ê°€ ëœ ì´í›„
+void AABItemBox::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	// ì´ ì—ì…‹ ë§¤ë‹ˆì €ì˜ ê²½ìš° ì—”ì§„ì´ ì´ˆê¸°í™”ë  ë•Œ ì–¸ì œë‚˜ ë¡œë”©ì„ ë³´ì¥í•´ì¤€ë‹¤ë¼ê³  ë³´ë©´ ëœë‹¤.
+	UAssetManager& Manager = UAssetManager::Get();
+
+	// Managerì˜ GetPrimaryAssetIdList()í•¨ìˆ˜ì— íƒœê·¸ ì •ë³´ë¥¼ ë„˜ê²¨ì£¼ë©´ ì§€ì •í•œ í´ë” ë‚´ì— ìˆëŠ” ëª¨ë“  ì—ì…‹ì— ëŒ€í•´ì„œ íƒœê·¸ ì•„ì´ë””ë¥¼ ê°€ì§€ê³  ìˆëŠ” ì—ì…‹ë“¤ì˜ ëª©ë¡ì„ ë°°ì—´ë¡œ ë°˜í™˜í•´ì¤€ë‹¤.
+	TArray<FPrimaryAssetId> Assets;
+	Manager.GetPrimaryAssetIdList(TEXT("ABItemData"), Assets);
+
+	// ì˜ ë™ì‘í•˜ëŠ”ê°€?
+	ensure(0 < Assets.Num());
+
+	// ì•½ì°¸ì¡° í›„, RandomInexë¥¼ í†µí•´ ëœë¤í•˜ê²Œ AssetDataë¥¼ ì§€ì •
+	int32 RandomIndex = FMath::RandRange(0, Assets.Num() - 1);
+	FSoftObjectPtr AssetPtr(Manager.GetPrimaryAssetPath(Assets[RandomIndex]));
+	if (AssetPtr.IsPending())
+	{
+		AssetPtr.LoadSynchronous();
+	}
+
+	Item = Cast<UABItemData>(AssetPtr.Get());
+	ensure(Item);
+}
+
+// ë°”ì¸ë”© ëœ í•¨ìˆ˜ ì„¤ì • ë° ë¡œì§ êµ¬ì„±
+// ì•„ì´í…œ íšë“í–ˆì„ ë•Œ
 void AABItemBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepHitResult)
 {
-	// ¾ÆÀÌÅÛ¿¡ ²ÎÀÌ Á¸ÀçÇÒ °æ¿ì
+	// ì•„ì´í…œì— ê½ì´ ì¡´ì¬í•  ê²½ìš°
 	if (nullptr == Item)
 	{
 		Destroy();
 		return;
 	}
 
-	// ItemÀÌ ÀÖ´Ù¸é TakeItem¿¡ ÀÎÀÚ·Î ³Ñ°ÜÁÖ±â
+	// Itemì´ ìˆë‹¤ë©´ TakeItemì— ì¸ìë¡œ ë„˜ê²¨ì£¼ê¸°
 	IABCharacterItemInterface* OverlappingPawn = Cast<IABCharacterItemInterface>(OtherActor);
 	if (OverlappingPawn)
 	{
@@ -66,7 +95,7 @@ void AABItemBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor
 	Mesh->SetHiddenInGame(true);
 	SetActorEnableCollision(false);
 
-	// ÀÌÆåÆ®°¡ ³¡³¯¶§ ¹ß»ıÇÏ´Â µ¨¸®°ÔÀÌÆ®¿¡ ³¡³¯¶§ Destroy¸¦ ÇØÁÖ´Â ÇÔ¼ö¸¦ ¹ÙÀÎµùÇØÁØ´Ù.
+	// ì´í™íŠ¸ê°€ ëë‚ ë•Œ ë°œìƒí•˜ëŠ” ë¸ë¦¬ê²Œì´íŠ¸ì— ëë‚ ë•Œ Destroyë¥¼ í•´ì£¼ëŠ” í•¨ìˆ˜ë¥¼ ë°”ì¸ë”©í•´ì¤€ë‹¤.
 	Effect->OnSystemFinished.AddDynamic(this, &AABItemBox::OnEffectFinished);
 }
 

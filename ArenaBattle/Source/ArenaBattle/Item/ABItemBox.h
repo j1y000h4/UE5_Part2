@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,6 +15,12 @@ public:
 	// Sets default values for this actor's properties
 	AABItemBox();
 
+	FORCEINLINE class UBoxComponent* GetTrigger() { return Trigger; }
+
+protected:
+	// ItemBoxì˜ ì•¡í„° ì„¸íŒ…ì´ ë§ˆë¬´ë¦¬ë˜ëŠ” ì‹œì ì— ëœë¤í•˜ê²Œ ë³´ìƒì„ ë„£ì„ ìˆ˜ ìˆë„ë¡ PostInitializeComponents()í•¨ìˆ˜ë¥¼ ì‚¬ìš©
+	virtual void PostInitializeComponents() override;
+
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Box)
 	TObjectPtr<class UBoxComponent> Trigger;
@@ -25,7 +31,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = Effect)
 	TObjectPtr<class UParticleSystemComponent> Effect;
 
-	// ºÎ¸ğ Å¬·¡½ºÇüÀ» ÁöÁ¤Çß±â ¶§¹®¿¡ Weapon, Potion, Scroll Áß ÇÏ³ª°¡ ¿©±â¿¡ ´ëÀÀµÈ´Ù.
+	// ë¶€ëª¨ í´ë˜ìŠ¤í˜•ì„ ì§€ì •í–ˆê¸° ë•Œë¬¸ì— Weapon, Potion, Scroll ì¤‘ í•˜ë‚˜ê°€ ì—¬ê¸°ì— ëŒ€ì‘ëœë‹¤.
 	UPROPERTY(EditAnywhere, Category = Item)
 	TObjectPtr<class UABItemData> Item;
 

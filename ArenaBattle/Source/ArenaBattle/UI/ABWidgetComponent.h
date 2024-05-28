@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,6 +15,6 @@ class ARENABATTLE_API UABWidgetComponent : public UWidgetComponent
 	GENERATED_BODY()
 	
 protected:
-	// È®ÀåÀ» À§ÇØ InitWidgetÀ» overrideÇÏ¿© ·ÎÁ÷ ±¸¼ºÇÏ±â
+	// í™•ì¥ì„ ìœ„í•´ InitWidgetì„ overrideí•˜ì—¬ ë¡œì§ êµ¬ì„±í•˜ê¸°
 	virtual void InitWidget() override;
 };

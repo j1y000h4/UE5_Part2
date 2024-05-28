@@ -1,10 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Character/ABCharacterBase.h"
-#include "InputActionValue.h"		// FInputActionValue ±¸Á¶Ã¼¸¦ »ç¿ëÇÏ±â À§ÇÔ
+#include "InputActionValue.h"		// FInputActionValue êµ¬ì¡°ì²´ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•¨
 #include "ABCharacterPlayer.generated.h"
 
 /**
@@ -26,22 +26,22 @@ protected:
 
 	// Character Control Section
 protected:
-	void ChangeCharacterControl();		// VÅ°¸¦ ´­·¯¼­ ÄÁÆ®·Ñ·¯¸¦ ¹Ù²Ù´Â °ÍÀ» ±¸ÇöÇÏ´Â ÇÔ¼ö
-	void SetChangeCharacterControl(ECharacterControlType NewCharacterControlYype);		// ½ÇÁ¦·Î º¯°æÀÌ ¹ß»ıÇßÀ» ¶§, ÄÁÆ®·Ñ¿¡ °ü·ÃµÈ ¸ğµç ¼³Á¤À» ÁøÇàÇØÁÖ´Â ÇÔ¼ö
+	void ChangeCharacterControl();		// Ví‚¤ë¥¼ ëˆŒëŸ¬ì„œ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë°”ê¾¸ëŠ” ê²ƒì„ êµ¬í˜„í•˜ëŠ” í•¨ìˆ˜
+	void SetChangeCharacterControl(ECharacterControlType NewCharacterControlYype);		// ì‹¤ì œë¡œ ë³€ê²½ì´ ë°œìƒí–ˆì„ ë•Œ, ì»¨íŠ¸ë¡¤ì— ê´€ë ¨ëœ ëª¨ë“  ì„¤ì •ì„ ì§„í–‰í•´ì£¼ëŠ” í•¨ìˆ˜
 
 	virtual void SetCharacterControlData(const class UABCharacterControlData* CharacterControlData) override;
 
 
-// Camera ¼ÂÆÃ °ü·Ã ÄÄÆ÷³ÍÆ® Ãß°¡
+// Camera ì…‹íŒ… ê´€ë ¨ ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
 protected:
-	// Meta = private·Î ¼±¾ğµÈ ¾î¶² ¾ğ¸®¾ó ¿ÀºêÁ§Æ®ÀÇ °´Ã¼µéÀ» ºí·çÇÁ¸°Æ®¿¡¼­µµ Á¢±ÙÇÒ ¼ö ÀÖµµ·Ï ¸¸µé¾î ÁÖ´Â Æ¯º°ÇÑ Áö½ÃÀÚ
+	// Meta = privateë¡œ ì„ ì–¸ëœ ì–´ë–¤ ì–¸ë¦¬ì–¼ ì˜¤ë¸Œì íŠ¸ì˜ ê°ì²´ë“¤ì„ ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œë„ ì ‘ê·¼í•  ìˆ˜ ìˆë„ë¡ ë§Œë“¤ì–´ ì£¼ëŠ” íŠ¹ë³„í•œ ì§€ì‹œì
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USpringArmComponent> CameraBoom;		// SpringArm
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<class UCameraComponent> FollowCamera;		// ½ÇÁ¦ Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ®
+	TObjectPtr<class UCameraComponent> FollowCamera;		// ì‹¤ì œ ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸
 
-// ÀÔ·Â ¼ÂÆÃ
+// ì…ë ¥ ì…‹íŒ…
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> JumpAction;
@@ -70,6 +70,6 @@ protected:
 	// Attack
 	void Attack();
 
-	// ÇöÀç ¾î¶² ºä¸¦ °¡Áö°í ÀÖ´Â°¡¿¡ ´ëÇÑ ¿­°ÅÇü º¯¼ö
+	// í˜„ì¬ ì–´ë–¤ ë·°ë¥¼ ê°€ì§€ê³  ìˆëŠ”ê°€ì— ëŒ€í•œ ì—´ê±°í˜• ë³€ìˆ˜
 	ECharacterControlType CurrentCharacterControlType;
 };

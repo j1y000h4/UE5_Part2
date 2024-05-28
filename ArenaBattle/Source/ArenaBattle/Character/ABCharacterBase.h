@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,7 +9,7 @@
 #include "Interface/ABCharacterItemInterface.h"
 #include "ABCharacterBase.generated.h"
 
-// È®ÀÎ¿ë ·Î±×
+// í™•ì¸ìš© ë¡œê·¸
 DECLARE_LOG_CATEGORY_EXTERN(LogABCharacter, Log, All);
 
 UENUM()
@@ -19,35 +19,35 @@ enum class ECharacterControlType : uint8
 	Quater
 };
 
-// ¾ÆÀÌÅÛÀ» Ã³¸®ÇÒ ¼ö ÀÖ°Ô µ¨¸®°ÔÀÌÆ® ¼±¾ğ
-// ÇØ´ç µ¨¸®°ÔÀÌÆ®ÀÇ °æ¿ì ´Ù¼ö¸¦ ¹è¿­·Î °ü¸®ÇÏ·Á°í ÇÑ´Ù. ÀÌ°Í ÀÚÃ¼¸¦ ÀÎÀÚ·Î ¾µ ¼ö°¡ ¾ø´Ù.
-// ÀÌ°ÍÀ» ¹è¿­·Î °ü¸®ÇÏ±âÀ§ÇØ¼­ ½¬¿î ¹æ¹ıÀº ÀÌ°ÍÀ» °¨½Î´Â ±¸Á¶Ã¼¸¦ ÇÏ³ª ¸¸µé¾î ÁÖ´Â°Í
+// ì•„ì´í…œì„ ì²˜ë¦¬í•  ìˆ˜ ìˆê²Œ ë¸ë¦¬ê²Œì´íŠ¸ ì„ ì–¸
+// í•´ë‹¹ ë¸ë¦¬ê²Œì´íŠ¸ì˜ ê²½ìš° ë‹¤ìˆ˜ë¥¼ ë°°ì—´ë¡œ ê´€ë¦¬í•˜ë ¤ê³  í•œë‹¤. ì´ê²ƒ ìì²´ë¥¼ ì¸ìë¡œ ì“¸ ìˆ˜ê°€ ì—†ë‹¤.
+// ì´ê²ƒì„ ë°°ì—´ë¡œ ê´€ë¦¬í•˜ê¸°ìœ„í•´ì„œ ì‰¬ìš´ ë°©ë²•ì€ ì´ê²ƒì„ ê°ì‹¸ëŠ” êµ¬ì¡°ì²´ë¥¼ í•˜ë‚˜ ë§Œë“¤ì–´ ì£¼ëŠ”ê²ƒ
 DECLARE_DELEGATE_OneParam(FOnTakeItemDelegate, class UABItemData* /*InItemData*/);
 
 USTRUCT(BlueprintType)
 struct FTakeItemDelegateWrapper
 {
 	GENERATED_BODY()
-	FTakeItemDelegateWrapper(){}		// »ı¼ºÀÚ
-	FTakeItemDelegateWrapper(const FOnTakeItemDelegate& InItemDelegate) : ItemDelegate(InItemDelegate){}		// ÀÎÀÚ¸¦ ¹Ş´Â »ı¼ºÀÚ
+	FTakeItemDelegateWrapper(){}		// ìƒì„±ì
+	FTakeItemDelegateWrapper(const FOnTakeItemDelegate& InItemDelegate) : ItemDelegate(InItemDelegate){}		// ì¸ìë¥¼ ë°›ëŠ” ìƒì„±ì
 	
 	FOnTakeItemDelegate ItemDelegate;
 };
 
 UCLASS()
-class ARENABATTLE_API AABCharacterBase : public ACharacter, public IABAnimationAttackInterface, public IABCharacterWidgetInterface, public IABCharacterItemInterface		// ÀÎÅÍÆäÀÌ½º »ó¼Ó
+class ARENABATTLE_API AABCharacterBase : public ACharacter, public IABAnimationAttackInterface, public IABCharacterWidgetInterface, public IABCharacterItemInterface		// ì¸í„°í˜ì´ìŠ¤ ìƒì†
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this pawn's properties
-	AABCharacterBase();		// »ı¼ºÀÚ
+	AABCharacterBase();		// ìƒì„±ì
 
-	// BeginPlay()°¡ ½ÃÀÛµÇ±â Àü¿¡ StatÀÇ µ¨¸®°ÔÀÌÆ®¸¦ µî·ÏÇØ¼­ Á×¾úÀ»¶§ Á×´Â ¸ğ¼ÇÀ» ¼öÇàÇÏµµ·Ï Ã³¸®
+	// BeginPlay()ê°€ ì‹œì‘ë˜ê¸° ì „ì— Statì˜ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ë“±ë¡í•´ì„œ ì£½ì—ˆì„ë•Œ ì£½ëŠ” ëª¨ì…˜ì„ ìˆ˜í–‰í•˜ë„ë¡ ì²˜ë¦¬
 	virtual void PostInitializeComponents() override;	
 
 protected:
-	virtual void SetCharacterControlData(const class UABCharacterControlData* CharacterControlData);		// Data¼¼ÆÃ ÇÔ¼ö
+	virtual void SetCharacterControlData(const class UABCharacterControlData* CharacterControlData);		// Dataì„¸íŒ… í•¨ìˆ˜
 
 	UPROPERTY(EditAnywhere,Category = CharacterControl, Meta = (AllowPrivateAccess = "true"))
 	TMap<ECharacterControlType, class UABCharacterControlData*> CharacterControlManager;
@@ -62,19 +62,19 @@ protected:
 
 	void ProcessComboCommand();
 
-	void ComboActionBegin();		// ¸ùÅ¸ÁÖ°¡ ½ÃÀÛµÉ ¶§ È£Ãâ
-	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded);			// ¸ùÅ¸ÁÖ°¡ ¸ğµÎ Á¾·á°¡ µÆÀ» ¶§ È£Ãâ / ¸ùÅ¸ÁÖ¿¡ ¼³Á¤µÈ µ¨¸®°ÔÀÌÆ®¸¦ ÅëÇØ¼­ ¹Ù·Î È£ÃâµÉ ¼ö ÀÖµµ·Ï ÆÄ¶ó¹ÌÅÍ ¼³Á¤
-	void SetComboCheckTimer();		// Å¸ÀÌ¸Ó¸¦ ¹ßµ¿ ½ÃÅ´
-	void ComboCheck();				// Å¸ÀÌ¸Ó°¡ ¹ßµ¿ÇßÀ» ¶§ ÀÔ·ÂÀÌ µé¾î¿Ô´ÂÁö Ã¼Å©ÇÏ´Â ÇÔ¼ö
+	void ComboActionBegin();		// ëª½íƒ€ì£¼ê°€ ì‹œì‘ë  ë•Œ í˜¸ì¶œ
+	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded);			// ëª½íƒ€ì£¼ê°€ ëª¨ë‘ ì¢…ë£Œê°€ ëì„ ë•Œ í˜¸ì¶œ / ëª½íƒ€ì£¼ì— ì„¤ì •ëœ ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ í†µí•´ì„œ ë°”ë¡œ í˜¸ì¶œë  ìˆ˜ ìˆë„ë¡ íŒŒë¼ë¯¸í„° ì„¤ì •
+	void SetComboCheckTimer();		// íƒ€ì´ë¨¸ë¥¼ ë°œë™ ì‹œí‚´
+	void ComboCheck();				// íƒ€ì´ë¨¸ê°€ ë°œë™í–ˆì„ ë•Œ ì…ë ¥ì´ ë“¤ì–´ì™”ëŠ”ì§€ ì²´í¬í•˜ëŠ” í•¨ìˆ˜
 
-	int32 CurrentCombo = 0;		// ÇöÀç ¸î¹øÂ° ÄŞº¸°¡ ½ÃÀÛµÇ°í ÀÖ´ÂÁö Ã¼Å©¸¦ À§ÇÑ (0 = ½ÃÀÛ¾ÈÇÔ, 1ÀÌ»ó = ½ÃÀÛ)
+	int32 CurrentCombo = 0;		// í˜„ì¬ ëª‡ë²ˆì§¸ ì½¤ë³´ê°€ ì‹œì‘ë˜ê³  ìˆëŠ”ì§€ ì²´í¬ë¥¼ ìœ„í•œ (0 = ì‹œì‘ì•ˆí•¨, 1ì´ìƒ = ì‹œì‘)
 	FTimerHandle ComboTimerHandle;
 	bool HasNextComboCommand;
 
 // Attack Hit Section
 protected:
 	virtual void AttackHitCheck() override;
-	// ¾ğ¸®¾ó ¿£Áø ¾×ÅÍ ¼³Á¤/±¸ÇöµÇ¾î ÀÖ´Ù. (TakeDamage)
+	// ì–¸ë¦¬ì–¼ ì—”ì§„ ì•¡í„° ì„¤ì •/êµ¬í˜„ë˜ì–´ ìˆë‹¤. (TakeDamage)
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 // Dead Section
@@ -82,10 +82,10 @@ protected:
 	UPROPERTY(EditAnywhere,BlueprintReadOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UAnimMontage> DeadMontage;
 
-	// Á×´Â »óÅÂ¸¦ ¼³Á¤ÇÏ´Â ÇÔ¼ö
+	// ì£½ëŠ” ìƒíƒœë¥¼ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
 	virtual void SetDead();
 
-	// Á×´Â ¾Ö´Ï¸ŞÀÌ¼Ç ¸ùÅ¸ÁÖ¸¦ Àç»ıÇÏ´Â ÇÔ¼ö
+	// ì£½ëŠ” ì• ë‹ˆë©”ì´ì…˜ ëª½íƒ€ì£¼ë¥¼ ì¬ìƒí•˜ëŠ” í•¨ìˆ˜
 	void PlayDeadAnimation();
 
 	float DeadEventDelayTime = 5.0f;
@@ -100,7 +100,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Widget, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UABWidgetComponent> HpBar;
 
-	// ÀÎÅÍÆäÀÌ½º¸¦ »ó¼Ó¹Ş¾ÒÀ¸´Ï, ÀÇ¹«ÀûÀ¸·Î ±â´ÉÀ» ±¸ÇöÇØ¾ß ÇÔ
+	// ì¸í„°í˜ì´ìŠ¤ë¥¼ ìƒì†ë°›ì•˜ìœ¼ë‹ˆ, ì˜ë¬´ì ìœ¼ë¡œ ê¸°ëŠ¥ì„ êµ¬í˜„í•´ì•¼ í•¨
 	virtual void SetupCharacterWidget(class UABUserWidget* InUserWidget) override;
 
 // Item Section
@@ -108,12 +108,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Equipment, Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class USkeletalMeshComponent> Weapon;
 
-	//FTakeItemDelegateWrapper¸¦ °ü¸®ÇØÁÙ ¼ö ÀÖ´Â ¹è¿­ ¼±¾ğ (TakeItemActions)
+	//FTakeItemDelegateWrapperë¥¼ ê´€ë¦¬í•´ì¤„ ìˆ˜ ìˆëŠ” ë°°ì—´ ì„ ì–¸ (TakeItemActions)
 	UPROPERTY()
 	TArray<FTakeItemDelegateWrapper> TakeItemActions;
 
 	virtual void TakeItem(class UABItemData* InItemData) override;
-	// TakeItemActions¿¡ ¹ÙÀÎµùµÉ ÇÔ¼öµé
+	// TakeItemActionsì— ë°”ì¸ë”©ë  í•¨ìˆ˜ë“¤
 	virtual void DrinkPostion(class UABItemData* InItemData);
 	virtual void EquipWeapon(class UABItemData* InItemData);
 	virtual void ReadScroll(class UABItemData* InItemData);

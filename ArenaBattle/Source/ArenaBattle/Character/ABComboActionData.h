@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -17,19 +17,19 @@ class ARENABATTLE_API UABComboActionData : public UPrimaryDataAsset
 public:
 	UABComboActionData();
 
-	// ¸ùÅ¸ÁÖ ¼½¼Ç ÀÌ¸§
+	// ëª½íƒ€ì£¼ ì„¹ì…˜ ì´ë¦„
 	UPROPERTY(EditAnywhere,Category = Name)
 	FString MontageSectionPrefix;
 
-	// ÃÑ ¸î°³ÀÇ ÄŞº¸°¡ ÀÖ´Â°¡
+	// ì´ ëª‡ê°œì˜ ì½¤ë³´ê°€ ìˆëŠ”ê°€
 	UPROPERTY(EditAnywhere, Category = Name)
 	uint8 MaxComboCount;
 
-	// ÇÁ·¹ÀÓ ±âÁØ Àç»ı ¼Óµµ
+	// í”„ë ˆì„ ê¸°ì¤€ ì¬ìƒ ì†ë„
 	UPROPERTY(EditAnywhere, Category = Name)
 	float FrameRate;
 
-	// ÀÔ·ÂÀÌ »çÀü¿¡ ÀÔ·ÂµÆ´ÂÁö °¨ÁöÇÏ´Â ÇÁ·¹ÀÓµé
+	// ì…ë ¥ì´ ì‚¬ì „ì— ì…ë ¥ëëŠ”ì§€ ê°ì§€í•˜ëŠ” í”„ë ˆì„ë“¤
 	UPROPERTY(EditAnywhere, Category = ComboData)
 	TArray<float> EffectiveFrameCount;
 };

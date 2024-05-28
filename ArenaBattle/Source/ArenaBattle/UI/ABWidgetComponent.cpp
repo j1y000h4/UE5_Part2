@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "UI/ABWidgetComponent.h"
@@ -6,16 +6,16 @@
 
 void UABWidgetComponent::InitWidget()
 {
-	// InitWidget()ÀÌ ½ÇÇàÀÌ µÈ´Ù´Â °ÍÀº ÀÌ¹Ì CreateWidget()ÀÌ ¿Ï·áµÈ ½ÃÁ¡. Widget¿¡ ´ëÇÑ ÀÎ½ºÅÏ½º°¡ »ı¼ºµÇ¾î ÀÖÀ½
+	// InitWidget()ì´ ì‹¤í–‰ì´ ëœë‹¤ëŠ” ê²ƒì€ ì´ë¯¸ CreateWidget()ì´ ì™„ë£Œëœ ì‹œì . Widgetì— ëŒ€í•œ ì¸ìŠ¤í„´ìŠ¤ê°€ ìƒì„±ë˜ì–´ ìˆìŒ
 	Super::InitWidget();
 
 	UABUserWidget* ABUserWidget = Cast<UABUserWidget>(GetWidget());
 
 	if (ABUserWidget)
 	{
-		// ÀÚ½ÅÀ» ¼ÒÀ¯ÇÏ°í ÀÖ´Â ¾×ÅÍ Á¤º¸¸¦ ¾ò¾î¿Ã ¼ö ÀÖÀ½. OwningActor
-		// ABUserWidgetÀ» »ó¼Ó¹Ş´Â UserWidgetÀÇ °æ¿ì ¿©±â¼­ ÃÊ±âÈ­ µÈ OwningActor °ªÀ» »ç¿ëÇÒ ¼ö ÀÖ°Ô µÈ´Ù.
-		// ABHpBarWidgetÀ» UUSerWidgetÀÌ ¾Æ´Ñ ABUserWidgetÀ» »ó¼Ó¹Şµµ·Ï º¯°æÇÏ±â
+		// ìì‹ ì„ ì†Œìœ í•˜ê³  ìˆëŠ” ì•¡í„° ì •ë³´ë¥¼ ì–»ì–´ì˜¬ ìˆ˜ ìˆìŒ. OwningActor
+		// ABUserWidgetì„ ìƒì†ë°›ëŠ” UserWidgetì˜ ê²½ìš° ì—¬ê¸°ì„œ ì´ˆê¸°í™” ëœ OwningActor ê°’ì„ ì‚¬ìš©í•  ìˆ˜ ìˆê²Œ ëœë‹¤.
+		// ABHpBarWidgetì„ UUSerWidgetì´ ì•„ë‹Œ ABUserWidgetì„ ìƒì†ë°›ë„ë¡ ë³€ê²½í•˜ê¸°
 		ABUserWidget->SetOwningActor(GetOwner());
 	}
 }

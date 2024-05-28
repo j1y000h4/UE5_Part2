@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -18,9 +18,9 @@ public:
 	UABAnimInstance();
 
 protected:
-	// AnimInstance°¡ Ã³À½ »ı¼ºµÉ ¶§ ÇÑ ¹ø È£Ãâ
+	// AnimInstanceê°€ ì²˜ìŒ ìƒì„±ë  ë•Œ í•œ ë²ˆ í˜¸ì¶œ
 	virtual void NativeInitializeAnimation() override;
-	// ÇÁ·¹ÀÓ¸¶´Ù È£Ãâ
+	// í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œ
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Character)
@@ -35,11 +35,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	float GroundSpeed;
 
-	// ¾ğ¸®¾ó¿¡¼­ bool Å¸ÀÔÀº »çÀÌÁî°¡ ¸íÈ®ÇÏÁö ¾Ê¾Æ¼­ integerÇüÀ¸·Î ¼±¾ğÇÏµÇ, b¶ó´Â Á¢µÎ»ç¸¦ ºÙ¿© ´Ù¸¥ integer Çü°ú ±¸ºĞ
+	// ì–¸ë¦¬ì–¼ì—ì„œ bool íƒ€ì…ì€ ì‚¬ì´ì¦ˆê°€ ëª…í™•í•˜ì§€ ì•Šì•„ì„œ integerí˜•ìœ¼ë¡œ ì„ ì–¸í•˜ë˜, bë¼ëŠ” ì ‘ë‘ì‚¬ë¥¼ ë¶™ì—¬ ë‹¤ë¥¸ integer í˜•ê³¼ êµ¬ë¶„
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	uint8 bIsIdle : 1;
 
-	// ¿òÁ÷ÀÌ°í ÀÖ´ÂÁö, ½¬°í ÀÖ´ÂÁö
+	// ì›€ì§ì´ê³  ìˆëŠ”ì§€, ì‰¬ê³  ìˆëŠ”ì§€
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	float MovingThreshould;
 
@@ -49,7 +49,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	uint8 bIsJumping : 1;
 
-	// ¿òÁ÷ÀÌ°í ÀÖ´ÂÁö, ½¬°í ÀÖ´ÂÁö
+	// ì›€ì§ì´ê³  ìˆëŠ”ì§€, ì‰¬ê³  ìˆëŠ”ì§€
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Character)
 	float JumpingThreshould;
 };

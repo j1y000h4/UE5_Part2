@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,12 +15,12 @@ class ARENABATTLE_API UABHpBarWidget : public UABUserWidget
 	GENERATED_BODY()
 	
 public:
-	// UserWidgetÀÇ °æ¿ì ÀÏ¹İÀûÀÎ »ı¼ºÀÚ¸¦ ¾²Áö¾ÊÀ½
+	// UserWidgetì˜ ê²½ìš° ì¼ë°˜ì ì¸ ìƒì„±ìë¥¼ ì“°ì§€ì•ŠìŒ
 	UABHpBarWidget(const FObjectInitializer& ObjectInitializer);
 
 protected:
-	// ±×³É UProgressBar¸¦ °¡Á®¿À°Ô µÇ¸é Null°ªÀÌ´Ï, À§Á¬ÀÌ ÃÊ±âÈ­µÉ ¶§ HpProgressBar¸¦ °¡Á®¿Í¼­ Æ÷ÀÎÅÍ¸¦ °¡Á®¿À´Â ±â´ÉÀ» Ãß°¡
-	// UserWidget¿¡¼­ »ç¿ëÇÏ´Â ÇÔ¼öÀÓ
+	// ê·¸ëƒ¥ UProgressBarë¥¼ ê°€ì ¸ì˜¤ê²Œ ë˜ë©´ Nullê°’ì´ë‹ˆ, ìœ„ì ¯ì´ ì´ˆê¸°í™”ë  ë•Œ HpProgressBarë¥¼ ê°€ì ¸ì™€ì„œ í¬ì¸í„°ë¥¼ ê°€ì ¸ì˜¤ëŠ” ê¸°ëŠ¥ì„ ì¶”ê°€
+	// UserWidgetì—ì„œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜ì„
 	virtual void NativeConstruct() override;
 
 public:
@@ -29,7 +29,7 @@ public:
 
 protected:
 	UPROPERTY()
-	TObjectPtr<class UProgressBar> HpProgressBar;		// Build Dependency¿¡¼­ UMG Ãß°¡ÇÏ±â
+	TObjectPtr<class UProgressBar> HpProgressBar;		// Build Dependencyì—ì„œ UMG ì¶”ê°€í•˜ê¸°
 
 	UPROPERTY()
 	float MaxHp;

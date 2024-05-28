@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -15,7 +15,7 @@ class ARENABATTLE_API UAnimNotify_AttackHitCheck : public UAnimNotify
 	GENERATED_BODY()
 	
 protected:
-	// UAnimNotify¿¡ ÀÖ´Â Notify ÇÔ¼ö¸¦ ¿À¹ö¶óÀÌµåÇØ¼­ »ç¿ë
+	// UAnimNotifyì— ìˆëŠ” Notify í•¨ìˆ˜ë¥¼ ì˜¤ë²„ë¼ì´ë“œí•´ì„œ ì‚¬ìš©
 	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) override;
 	
 };

@@ -1,14 +1,15 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameData/ABCharacterStat.h"
 #include "ABCharacterStatComponent.generated.h"
 
-// µ¨¸®°ÔÀÌÆ® ¼±¾ğ
-DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);		// Hp°¡ 0ÀÏ¶§, Á×¾ú´Ù¶ó´Â ½Ã±×³Î µ¨¸®°ÔÀÌÆ®
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangedDelegate, float /*CurrentHp*/);		// º¯°æµÈ ÇöÀç Hp °ªÀ» ±¸µ¶ÇÑ °´Ã¼µé¿¡°Ô º¸³»µµ·Ï ÀÎÀÚ °ªÀ» ¼³Á¤
+// ë¸ë¦¬ê²Œì´íŠ¸ ì„ ì–¸
+DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);		// Hpê°€ 0ì¼ë•Œ, ì£½ì—ˆë‹¤ë¼ëŠ” ì‹œê·¸ë„ ë¸ë¦¬ê²Œì´íŠ¸
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangedDelegate, float /*CurrentHp*/);		// ë³€ê²½ëœ í˜„ì¬ Hp ê°’ì„ êµ¬ë…í•œ ê°ì²´ë“¤ì—ê²Œ ë³´ë‚´ë„ë¡ ì¸ì ê°’ì„ ì„¤ì •
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -25,24 +26,42 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	// µ¨¸®°ÔÀÌÆ® º¯¼ö ¼±¾ğ
+	// ë¸ë¦¬ê²Œì´íŠ¸ ë³€ìˆ˜ ì„ ì–¸
 	FOnHpZeroDelegate OnHpZero;
 	FOnHpChangedDelegate OnHpChanged;
 
-	FORCEINLINE float GetMaxHp() { return MaxHp; }
+	// Stat Section
+	// ë ˆë²¨ì„ ì„¤ì •í•´ì£¼ëŠ” í•¨ìˆ˜
+	void SetLevelStat(int32 InNewLevel);
+	// ë ˆë²¨ Getter í•¨ìˆ˜
+	FORCEINLINE float GetCurrentLevel() const { return CurrentLevel; }
+	// ë¬´ê¸° .. ë“±ì„ íšë“í–ˆì„ë•Œ ModifierStatì„ ë³€ê²½í•´ì¤„ ìˆ˜ ìˆëŠ” Setter í•¨ìˆ˜
+	FORCEINLINE void SetModifierStat(const FABCharacterStat& InModifierStat) { ModifierStat = InModifierStat; }
+	// ìºë¦­í„°ì˜ ì „ì²´ ìŠ¤í…Ÿê°’ì„ ë°›ì•„ì˜¬ ìˆ˜ ìˆë„ë¡
+	FORCEINLINE FABCharacterStat GetTotalStat() const { return BaseStat + ModifierStat; }
+
 	FORCEINLINE float GetCurrentHp() { return CurrentHp; }
 	float ApplyDamage(float InDamage);
 		
 protected:
-	// ³»ºÎÀûÀ¸·Î Hp°ªÀÌ º¯µ¿ÀÌ µÆÀ»¶§ ½ÇÇàÇÒ ÇÔ¼ö
-	// Hp°¡ º¯°æÀÌ µÇ·Á¸é ¹İµå½Ã ÀÌ ÇÔ¼ö¸¦ ÅëÇØ °¡Áö°í È£ÃâÇÏµµ·Ï ¼³Á¤
+	// ë‚´ë¶€ì ìœ¼ë¡œ Hpê°’ì´ ë³€ë™ì´ ëì„ë•Œ ì‹¤í–‰í•  í•¨ìˆ˜
+	// Hpê°€ ë³€ê²½ì´ ë˜ë ¤ë©´ ë°˜ë“œì‹œ ì´ í•¨ìˆ˜ë¥¼ í†µí•´ ê°€ì§€ê³  í˜¸ì¶œí•˜ë„ë¡ ì„¤ì •
 	void SetHp(float NewHp);
 
-	// VisibleInstanceOnly = ÀÎ½ºÅÏ½º¸¶´Ù hp°ªÀ» ´Ù¸£°Ô ¼³Á¤ÇÒ ¼ö ÀÖÀ½
-	UPROPERTY(VisibleInstanceOnly,Category = Stat)
-	float MaxHp;
 
-	// µğ½ºÅ©¿¡ ÀúÀåÇÒ ÇÊ¿ä°¡ ¾ø´Â ÈÖ¹ß¼º µ¥ÀÌÅÍÀÇ °æ¿ì Transient ¶ó´Â Å°¿öµå¸¦ Ãß°¡ÇÏ¿© µğ½ºÅ©¿¡ ÀúÀåÇÒ¶§ ºÒÇÊ¿äÇÑ °ø°£ÀÌ ³¶ºñµÇÁö ¾Êµµ·Ï ÁöÁ¤ÇÒ ¼ö ÀÖÀ½
+	// í•´ë‹¹ ë„¤ ê°€ì§€ ê°’ë“¤ì€ ìºë¦­í„°ê°€ ì´ˆê¸°í™”ë  ë•Œë§ˆë‹¤ ì–¸ì œë“ ì§€ ë°”ë€” ìˆ˜ ìˆë‹¤. ê·¸ë ‡ê¸° ë•Œë¬¸ì— ì–¸ë¦¬ì–¼ ì—”ì§„ì„ ì €ì¥í•  ë•ŒëŠ” í•´ë‹¹ ì •ë³´ê°€ ì €ì¥ë˜ì§€ ì•Šë„ë¡ Transient í‚¤ì›Œë“œë¥¼ ì¶”ê°€í•˜ê³ , ì—ë””í„°ì—ì„œëŠ” ì½ê¸° ì „ìš©ìœ¼ë¡œ ì„¤ì •
+	// ë””ìŠ¤í¬ì— ì €ì¥í•  í•„ìš”ê°€ ì—†ëŠ” íœ˜ë°œì„± ë°ì´í„°ì˜ ê²½ìš° Transient ë¼ëŠ” í‚¤ì›Œë“œë¥¼ ì¶”ê°€í•˜ì—¬ ë””ìŠ¤í¬ì— ì €ì¥í• ë•Œ ë¶ˆí•„ìš”í•œ ê³µê°„ì´ ë‚­ë¹„ë˜ì§€ ì•Šë„ë¡ ì§€ì •í•  ìˆ˜ ìˆìŒ
 	UPROPERTY(VisibleInstanceOnly, Category = Stat)
 	float CurrentHp;
+
+	// ìºë¦­í„° ìŠ¤í…Ÿì€ í˜„ì¬ ë ˆë²¨ì˜ ì •ë³´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ í•´ì„œ ê²Œì„ ì‹±ê¸€í†¤ìœ¼ë¡œë¶€í„° ìŠ¤í…Ÿ ì •ë³´ë¥¼ ì œê³µë°›ê²Œ ëœë‹¤.
+	UPROPERTY(Transient, VisibleInstanceOnly,Category = Stat)
+	float CurrentLevel;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	FABCharacterStat BaseStat;
+
+	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	FABCharacterStat ModifierStat;
+
 };

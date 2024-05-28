@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,5 +19,5 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Actor")
-	TObjectPtr<AActor> OwningActor;		// ¾×ÅÍ Á¤º¸¸¦ º¸°üÇÒ ¼ö ÀÖµµ·Ï
+	TObjectPtr<AActor> OwningActor;		// ì•¡í„° ì •ë³´ë¥¼ ë³´ê´€í•  ìˆ˜ ìˆë„ë¡
 };

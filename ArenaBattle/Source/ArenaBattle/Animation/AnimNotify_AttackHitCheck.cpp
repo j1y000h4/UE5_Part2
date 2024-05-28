@@ -1,18 +1,18 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Animation/AnimNotify_AttackHitCheck.h"
-//#include "Character/ABCharacterBase.h"		// ´Ù¸¥ Æú´õÀÇ Çì´õÆÄÀÏÀ» Ãß°¡ÇÏ´Â °ÍÀº °á±¹ ÀÇÁ¸¼ºÀÌ »ı±ä´Ù´Â °Í
+//#include "Character/ABCharacterBase.h"		// ë‹¤ë¥¸ í´ë”ì˜ í—¤ë”íŒŒì¼ì„ ì¶”ê°€í•˜ëŠ” ê²ƒì€ ê²°êµ­ ì˜ì¡´ì„±ì´ ìƒê¸´ë‹¤ëŠ” ê²ƒ
 #include "Interface/ABAnimationAttackInterface.h"
 
 void UAnimNotify_AttackHitCheck::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference)
 {
 	Super::Notify(MeshComp, Animation, EventReference);
 
-	// ¸Ş½¬ ÄÄÆ÷³ÍÆ®°¡ ÀÖ´Ù¸é
+	// ë©”ì‰¬ ì»´í¬ë„ŒíŠ¸ê°€ ìˆë‹¤ë©´
 	if (MeshComp)
 	{
-		// ÇØ´ç Owner°¡ ÀÎÅÍÆäÀÌ½º¸¦ ±¸ÇöÇß´ÂÁö Ã¼Å©ÇÏ±â
+		// í•´ë‹¹ Ownerê°€ ì¸í„°í˜ì´ìŠ¤ë¥¼ êµ¬í˜„í–ˆëŠ”ì§€ ì²´í¬í•˜ê¸°
 		IABAnimationAttackInterface* AttackPawn = Cast<IABAnimationAttackInterface>(MeshComp->GetOwner());
 
 		if (AttackPawn)

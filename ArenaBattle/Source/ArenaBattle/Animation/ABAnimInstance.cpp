@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Animation/ABAnimInstance.h"
@@ -11,25 +11,25 @@ UABAnimInstance::UABAnimInstance()
 	JumpingThreshould = 100.0f;
 }
 
-// AnimInstance°¡ Ã³À½ »ı¼ºµÉ ¶§ ÇÑ ¹ø È£Ãâ
+// AnimInstanceê°€ ì²˜ìŒ ìƒì„±ë  ë•Œ í•œ ë²ˆ í˜¸ì¶œ
 void UABAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();
 
-	// ¿ÀºêÁ§Æ®¿¡ ´ëÇÑ Æ÷ÀÎÆ® °ªÀ» ÃÊ±âÈ­
-	Owner = Cast<ACharacter>(GetOwningActor());		// Çüº¯È¯
-	if (Owner)		// Null °ª È®ÀÎ
+	// ì˜¤ë¸Œì íŠ¸ì— ëŒ€í•œ í¬ì¸íŠ¸ ê°’ì„ ì´ˆê¸°í™”
+	Owner = Cast<ACharacter>(GetOwningActor());		// í˜•ë³€í™˜
+	if (Owner)		// Null ê°’ í™•ì¸
 	{
-		Movement = Owner->GetCharacterMovement();		// Movement¸¦ ÅëÇØ Ä³¸¯ÅÍ ¹«ºê¸ÕÆ® °´Ã¼·Î ºÎÅÍ °ªÀ» ¾ò¾î¿Ã ¼ö ÀÖ´Ù.
+		Movement = Owner->GetCharacterMovement();		// Movementë¥¼ í†µí•´ ìºë¦­í„° ë¬´ë¸Œë¨¼íŠ¸ ê°ì²´ë¡œ ë¶€í„° ê°’ì„ ì–»ì–´ì˜¬ ìˆ˜ ìˆë‹¤.
 	}
 }
 
-// ÇÁ·¹ÀÓ¸¶´Ù È£Ãâ
+// í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œ
 void UABAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
-	// NativeInitializeAnimation()¿¡¼­ °¡Á®¿Â °ªÀ¸·Î ·ÎÁ÷ ±¸¼º
+	// NativeInitializeAnimation()ì—ì„œ ê°€ì ¸ì˜¨ ê°’ìœ¼ë¡œ ë¡œì§ êµ¬ì„±
 	if (Movement)
 	{
 		Velocity = Movement->Velocity;

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -6,11 +6,11 @@
 #include "GameFramework/Actor.h"
 #include "ABStageGimmick.generated.h"
 
-// ¿ø·¡´Â »óÅÂ º¯°æ ÇÔ¼öµîÀ» Switch¹®À¸·Î ±¸¼ºÇÏ±âµµ ÇÏÁö¸¸, »óÅÂ°¡ Á¡Á¡ ´Ã¾î³¯ ¼ö·Ï ±²ÀåÈ÷ º¹ÀâÇØ º¸ÀÎ´Ù.
-// ±×·¡¼­ µ¨¸®°ÔÀÌÆ® ¾î·¹ÀÌ·Î ÇÔ¼ö Æ÷ÀÎÅÍ¸¦ »ç¿ëÇØ¼­ ±¸¼ºÇÏ´Â ¹æ¹ıµµ ÀÖ´Ù.
+// ì›ë˜ëŠ” ìƒíƒœ ë³€ê²½ í•¨ìˆ˜ë“±ì„ Switchë¬¸ìœ¼ë¡œ êµ¬ì„±í•˜ê¸°ë„ í•˜ì§€ë§Œ, ìƒíƒœê°€ ì ì  ëŠ˜ì–´ë‚  ìˆ˜ë¡ êµ‰ì¥íˆ ë³µì¡í•´ ë³´ì¸ë‹¤.
+// ê·¸ë˜ì„œ ë¸ë¦¬ê²Œì´íŠ¸ ì–´ë ˆì´ë¡œ í•¨ìˆ˜ í¬ì¸í„°ë¥¼ ì‚¬ìš©í•´ì„œ êµ¬ì„±í•˜ëŠ” ë°©ë²•ë„ ìˆë‹¤.
 
-// µ¨¸®°ÔÀÌÆ® ¼±¾ğ
-// µ¨¸®°ÔÀÌÆ®¸¦ °¨½Î´Â Wrapper±¸Á¶Ã¼ ¼±¾ğ
+// ë¸ë¦¬ê²Œì´íŠ¸ ì„ ì–¸
+// ë¸ë¦¬ê²Œì´íŠ¸ë¥¼ ê°ì‹¸ëŠ” Wrapperêµ¬ì¡°ì²´ ì„ ì–¸
 DECLARE_DELEGATE(FOnStageChangedDelegate)
 USTRUCT(BlueprintType)
 struct FStageChangedDelegateWrapper
@@ -40,7 +40,7 @@ public:
 	AABStageGimmick();
 
 protected:
-	// ¿¡µğÅÍ¿¡¼­ °ªÀ» º¯°æÇÏ¸é ½ÇÇàµÇ´Â ÇÔ¼ö
+	// ì—ë””í„°ì—ì„œ ê°’ì„ ë³€ê²½í•˜ë©´ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 // Stage Section
@@ -65,7 +65,7 @@ protected:
 	UFUNCTION()
 	void OnGateTriggerBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
-	// Gate ¸ğµç ¹® ¿­±â/´İ±â ÇÔ¼ö
+	// Gate ëª¨ë“  ë¬¸ ì—´ê¸°/ë‹«ê¸° í•¨ìˆ˜
 	void OpenAllGates();
 	void CloseAllGates();
 
@@ -75,16 +75,56 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Stage, Meta = (AllowPrivateAccess = "true"))
 	EStageState CurrentState;
 
-	// »óÅÂ º¯°æÀº ¾ğÁ¦³ª SetState ÇÔ¼ö È£ÃâÀ» ÅëÇØ¼­ ÀÌ·ç¾îÁöµµ·Ï ±ÔÄ¢ ¼³Á¤
+	// ìƒíƒœ ë³€ê²½ì€ ì–¸ì œë‚˜ SetState í•¨ìˆ˜ í˜¸ì¶œì„ í†µí•´ì„œ ì´ë£¨ì–´ì§€ë„ë¡ ê·œì¹™ ì„¤ì •
 	void SetState(EStageState InNewState);
 
 	UPROPERTY()
 	TMap<EStageState, FStageChangedDelegateWrapper> StateChangeActions;
 
-	// »óÅÂ¸¦ ¹ÙÀÎµùÇÒ ÇÔ¼öµé
-	// ÀÌ·±½ÄÀ¸·Î »óÅÂ¸¦ º¯È­½ÃÅ°´Â ÇÔ¼öµéÀ» º°µµ·Î ¼±¾ğÇÏ¸é ½ºÀ§Ä¡¹®À» »ç¿ëÇÏÁö¾Ê°í °¢°¢ÀÇ ÇÔ¼ö¿¡¼­ ·ÎÁ÷ Àü°³ °¡´É
+	// ìƒíƒœë¥¼ ë°”ì¸ë”©í•  í•¨ìˆ˜ë“¤
+	// ì´ëŸ°ì‹ìœ¼ë¡œ ìƒíƒœë¥¼ ë³€í™”ì‹œí‚¤ëŠ” í•¨ìˆ˜ë“¤ì„ ë³„ë„ë¡œ ì„ ì–¸í•˜ë©´ ìŠ¤ìœ„ì¹˜ë¬¸ì„ ì‚¬ìš©í•˜ì§€ì•Šê³  ê°ê°ì˜ í•¨ìˆ˜ì—ì„œ ë¡œì§ ì „ê°œ ê°€ëŠ¥
 	void SetReady();
 	void SetFight();
 	void SetChooseReward();
 	void SetChooseNext();
+
+// Fight Section
+protected:
+	// TSubclassOf - ì–¸ë¦¬ì–¼ì—ì„œ ì œê³µí•˜ëŠ” í…œí”Œë¦¿ í´ë˜ìŠ¤, ì§€ì •í•œ í´ë˜ìŠ¤ë¡œë¶€í„° ìƒì†ë°›ì€ í´ë˜ìŠ¤ ëª©ë¡ë§Œ í‘œì‹œë˜ë„ë¡ í•œì •í•´ì„œ ì§€ì •í•  ìˆ˜ ìˆê²Œ ê¸°ëŠ¥ì„ ì œê³µ
+	// í´ë˜ìŠ¤ ì •ë³´ë¥¼ í•œì •ì‹œì¼œì£¼ëŠ” ê¸°ëŠ¥ì„ ì‚¬ìš©í•´ì„œ ë³´ë‹¤ í¸ë¦¬í•˜ê²Œ ìŠ¤í°ì‹œí‚¬ NPCë¥¼ ì§€ì •í•  ìˆ˜ ìˆìŒ
+	UPROPERTY(EditAnywhere, Category = Fight, Meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class AABCharacterNonPlayer> OpponentClass;
+
+	// ìŠ¤í°ì— ë”œë ˆì´ë¥¼ ì£¼ê¸°ìœ„í•œ ë³€ìˆ˜
+	UPROPERTY(EditAnywhere, Category = Fight, Meta = (AllowPrivateAccess = "true"))
+	float OpponentSpawnTime;
+
+	// NPCê°€ ì£½ìœ¼ë©´ ë‹¤ìŒ ë³´ìƒë‹¨ê³„ë¡œ ì§„í–‰í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
+	UFUNCTION()
+	void OnOpponentDestroyed(AActor* DestoryedActor);
+
+	FTimerHandle OpponentTimerHandle;
+
+	void OnOpponentSpawn();
+
+// Reward Section
+protected:
+	// AABItemBoxì— ìƒì†ë°›ì€ í´ë˜ìŠ¤ë“¤ì„ ëŒ€ìƒìœ¼ë¡œ í•œì •ì‹œí‚¤ê¸° ìœ„í•´ TSubclassOf í…œí”Œë¦¿ í´ë˜ìŠ¤ë¡œ íƒ€ì… ì§€ì •
+	UPROPERTY(VisibleAnywhere, Category = Reward, Meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class AABItemBox> RewardBoxClass;
+
+	// TWeakObjectPtr(ì•½ì°¸ì¡°)
+	// RewardBoxesì˜ ê²½ìš° ìŠ¤í°ëœ ìƒìë¥¼ ê´€ë¦¬í•˜ê¸° ìœ„í•´ì„œ ì„ ì–¸í•œ ê²ƒ. ì´ ìŠ¤í°ëœ ìƒìë“¤ì€ ì‚¬ì‹¤ìƒ ì‘ì—…í•˜ê³  ìˆëŠ” ìŠ¤í…Œì´ì§€ ê¸°ë¯¹ ì•¡í„°ì™€ëŠ” ë¬´ê´€í•˜ê²Œ ìê¸° ìŠ¤ìŠ¤ë¡œ ë™ì‘í•˜ê²Œ ëœë‹¤.
+	// ê·¸ë˜ì„œ ì™¸ë¶€ì˜ ì˜í–¥ or ë‚´ë¶€ì˜ ë¡œì§ì— ì˜í•´ ìŠ¤ìŠ¤ë¡œ ì†Œë©¸ë  ìˆ˜ë„ ìˆë‹¤. ì´ ê²½ìš° TObjectPtr(ê°•ì°¸ì¡°)ë¡œ ê±¸ê²Œ ë˜ë©´ ì–¸ë¦¬ì–¼ì€ ë©”ëª¨ë¦¬ì—ì„œ ì†Œë©¸ì‹œí‚¤ì§€ ì•Šì„ìˆ˜ë„ ìˆë‹¤.
+	// ì•¡í„° ì†Œë©¸ê³¼ í•¨ê»˜ ë©”ëª¨ë¦¬ì—ì„œ ì†Œë©¸ë˜ì•¼í•œë‹¤ë©´ ê°•ì°¸ì¡°ê°€ ë§ì§€ë§Œ, ì´ë ‡ê²Œ ì•¡í„°ì™€ ë¬´ê´€í•˜ê²Œ ë™ì‘í•´ì•¼ë˜ëŠ” ë‹¤ë¥¸ ì•¡í„°ë“¤ì˜ ê²½ìš° ê°€ê¸‰ì  ì•½ì°¸ì¡°ë¥¼ ê±¸ì–´ ê´€ë¦¬í•˜ëŠ”ê²Œ ì¢‹ë‹¤.
+	UPROPERTY(VisibleAnywhere, Category = Reward, Meta = (AllowPrivateAccess = "true"))
+	TArray<TWeakObjectPtr<class AABItemBox>> RewardBoxes;
+
+	// Keyë¡œ ê´€ë¦¬í•  ìˆ˜ ìˆë„ë¡ Map ì‚¬ìš©
+	TMap<FName, FVector> RewardBoxLocations;
+
+	UFUNCTION()
+	void OnRewardTriggerBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	void SpawnRewardBoxes();
 };

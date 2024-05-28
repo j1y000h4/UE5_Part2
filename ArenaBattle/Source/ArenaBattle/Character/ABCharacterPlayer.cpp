@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Character/ABCharacterPlayer.h"
@@ -9,16 +9,16 @@
 #include "EnhancedInputSubsystems.h"
 #include "ABCharacterControlData.h"
 
-AABCharacterPlayer::AABCharacterPlayer()		// »ı¼ºÀÚ
+AABCharacterPlayer::AABCharacterPlayer()		// ìƒì„±ì
 {
 	// Camera
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));		// ÄÄÆ÷³ÍÆ® »ı¼º
+	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));		// ì»´í¬ë„ŒíŠ¸ ìƒì„±
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->TargetArmLength = 400.0f;
 	CameraBoom->bUsePawnControlRotation = true;
 
-	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));		// ÄÄÆ÷³ÍÆ® »ı¼º
-	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);			// Ä«¸Ş¶ó¾Ï¿¡ ºÎÂø(CameraBoom) / ¼ÒÄÏÀÌ¶ó´Â Æ¯º°ÇÑ ÀÌ¸§Áö½ÃÀÚ¸¦ ÁöÁ¤ÇÏ¸é ½ºÇÁ¸µ ¾ÏÀÇ ³¡¿¡ ÀÚµ¿À¸·Î ´Ş¶óºÙ°Ô µÈ´Ù.
+	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));		// ì»´í¬ë„ŒíŠ¸ ìƒì„±
+	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);			// ì¹´ë©”ë¼ì•”ì— ë¶€ì°©(CameraBoom) / ì†Œì¼“ì´ë¼ëŠ” íŠ¹ë³„í•œ ì´ë¦„ì§€ì‹œìë¥¼ ì§€ì •í•˜ë©´ ìŠ¤í”„ë§ ì•”ì˜ ëì— ìë™ìœ¼ë¡œ ë‹¬ë¼ë¶™ê²Œ ëœë‹¤.
 	FollowCamera->bUsePawnControlRotation = false;
 
 	// Input
@@ -28,41 +28,41 @@ AABCharacterPlayer::AABCharacterPlayer()		// »ı¼ºÀÚ
 		JumpAction = InputActionJumpRef.Object;
 	}
 
-	// ChangeControl ¾×¼Ç¿¡ ´ëÇØ¼­
+	// ChangeControl ì•¡ì…˜ì— ëŒ€í•´ì„œ
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputChangeActionControlRef(TEXT("/Script/EnhancedInput.InputAction'/Game/ArenaBattle/Input/Actions/IA_ChangeControl.IA_ChangeControl'"));
 	if (nullptr != InputChangeActionControlRef.Object)
 	{
 		ChangeControlAction = InputChangeActionControlRef.Object;
 	}
 
-	// ShoulderMove ¾×¼Ç¿¡ ´ëÇØ¼­
+	// ShoulderMove ì•¡ì…˜ì— ëŒ€í•´ì„œ
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/ArenaBattle/Input/Actions/IA_ShoulderMove.IA_ShoulderMove'"));
 	if (nullptr != InputActionShoulderMoveRef.Object)
 	{
 		ShoulderMoveAction = InputActionShoulderMoveRef.Object;
 	}
-	// ShoulderLook ¾×¼Ç¿¡ ´ëÇØ¼­
+	// ShoulderLook ì•¡ì…˜ì— ëŒ€í•´ì„œ
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionShoulderLookRef(TEXT("/Script/EnhancedInput.InputAction'/Game/ArenaBattle/Input/Actions/IA_ShoulderLook.IA_ShoulderLook'"));
 	if (nullptr != InputActionShoulderLookRef.Object)
 	{
 		ShoulderLookAction = InputActionShoulderLookRef.Object;
 	}
 
-	// QuaterMove ¾×¼Ç¿¡ ´ëÇØ¼­
+	// QuaterMove ì•¡ì…˜ì— ëŒ€í•´ì„œ
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionQuaterMoveRef(TEXT("/Script/EnhancedInput.InputAction'/Game/ArenaBattle/Input/Actions/IA_QuaterMove.IA_QuaterMove'"));
 	if (nullptr != InputActionQuaterMoveRef.Object)
 	{
 		QuaterMoveAction = InputActionQuaterMoveRef.Object;
 	}
 
-	// Attack ¾×¼Ç¿¡ ´ëÇØ¼­
+	// Attack ì•¡ì…˜ì— ëŒ€í•´ì„œ
 	static ConstructorHelpers::FObjectFinder<UInputAction> InputActionAttackRef(TEXT("/Script/EnhancedInput.InputAction'/Game/ArenaBattle/Input/Actions/IA_Attack.IA_Attack'"));
 	if (nullptr != InputActionAttackRef.Object)
 	{
 		AttackAction = InputActionAttackRef.Object;
 	}
 
-	// ÇöÀç ¾î¶² ÄÁÆ®·ÑÅ¸ÀÔÀ» °¡Áö°í ÀÖ´ÂÁö¿¡ ´ëÇÑ ¿­°ÅÇü º¯¼ö = ÄõÅÍºä·Î ÃÊ±âÈ­
+	// í˜„ì¬ ì–´ë–¤ ì»¨íŠ¸ë¡¤íƒ€ì…ì„ ê°€ì§€ê³  ìˆëŠ”ì§€ì— ëŒ€í•œ ì—´ê±°í˜• ë³€ìˆ˜ = ì¿¼í„°ë·°ë¡œ ì´ˆê¸°í™”
 	CurrentCharacterControlType = ECharacterControlType::Quater;
 }
 
@@ -77,21 +77,21 @@ void AABCharacterPlayer::SetupPlayerInputComponent(class UInputComponent* Player
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);		// ¸¸¾à EnhancedInputComponent¸¦ »ç¿ëÇÏÁö ¾ÊÀ¸¸é ¿¡·¯¸¦ ¹ß»ıÇÏµµ·Ï CastChecked ÇÔ¼ö¸¦ »ç¿ë
+	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);		// ë§Œì•½ EnhancedInputComponentë¥¼ ì‚¬ìš©í•˜ì§€ ì•Šìœ¼ë©´ ì—ëŸ¬ë¥¼ ë°œìƒí•˜ë„ë¡ CastChecked í•¨ìˆ˜ë¥¼ ì‚¬ìš©
 
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Completed, this, &AABCharacterPlayer::ChangeCharacterControl);		// ºä¸¦ ¹Ù²Ù´Â ¾×¼Ç
+	EnhancedInputComponent->BindAction(ChangeControlAction, ETriggerEvent::Completed, this, &AABCharacterPlayer::ChangeCharacterControl);		// ë·°ë¥¼ ë°”ê¾¸ëŠ” ì•¡ì…˜
 	EnhancedInputComponent->BindAction(ShoulderMoveAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::ShoulderMove);
 	EnhancedInputComponent->BindAction(ShoulderLookAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::ShoulderLook);
 	EnhancedInputComponent->BindAction(QuaterMoveAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::QuaterMove);
-	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::Attack);		// ÀÔ·Â Attack¾×¼ÇÀÌ ¹ßµ¿µÇ¾úÀ» ¶§, AttackÇÔ¼ö ¹ÙÀÎµù
+	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AABCharacterPlayer::Attack);		// ì…ë ¥ Attackì•¡ì…˜ì´ ë°œë™ë˜ì—ˆì„ ë•Œ, Attackí•¨ìˆ˜ ë°”ì¸ë”©
 }
 
-// VÅ°¸¦ ´­·¯¼­ ÄÁÆ®·Ñ·¯¸¦ ¹Ù²Ù´Â °ÍÀ» ±¸ÇöÇÏ´Â ÇÔ¼ö
+// Ví‚¤ë¥¼ ëˆŒëŸ¬ì„œ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë°”ê¾¸ëŠ” ê²ƒì„ êµ¬í˜„í•˜ëŠ” í•¨ìˆ˜
 void AABCharacterPlayer::ChangeCharacterControl()
 {
-	// ÄõÅÍºäÀÏ¶§´Â ¼ñ´õºä·Î, ¼ñ´õºäÀÏ¶§´Â ÄõÅÍºä·Î
+	// ì¿¼í„°ë·°ì¼ë•ŒëŠ” ìˆ„ë”ë·°ë¡œ, ìˆ„ë”ë·°ì¼ë•ŒëŠ” ì¿¼í„°ë·°ë¡œ
 	if (CurrentCharacterControlType == ECharacterControlType::Quater)
 	{
 		SetChangeCharacterControl(ECharacterControlType::Shoulder);
@@ -102,24 +102,24 @@ void AABCharacterPlayer::ChangeCharacterControl()
 	}
 }
 
-// ½ÇÁ¦·Î º¯°æÀÌ ¹ß»ıÇßÀ» ¶§, ÄÁÆ®·Ñ¿¡ °ü·ÃµÈ ¸ğµç ¼³Á¤À» ÁøÇàÇØÁÖ´Â ÇÔ¼ö
+// ì‹¤ì œë¡œ ë³€ê²½ì´ ë°œìƒí–ˆì„ ë•Œ, ì»¨íŠ¸ë¡¤ì— ê´€ë ¨ëœ ëª¨ë“  ì„¤ì •ì„ ì§„í–‰í•´ì£¼ëŠ” í•¨ìˆ˜
 void AABCharacterPlayer::SetChangeCharacterControl(ECharacterControlType NewCharacterControlType)
 {
-	// »óÀ§Å¬·¡½º¿¡ ¼±¾ğµÈ ÄÁÆ®·Ñ¸Å´ÏÀú(CharacterControlData)¿¡¼­ ÄÁÆ®·Ñ µ¥ÀÌÅÍ ¾Ö¼Â °¡Á®¿À±â
+	// ìƒìœ„í´ë˜ìŠ¤ì— ì„ ì–¸ëœ ì»¨íŠ¸ë¡¤ë§¤ë‹ˆì €(CharacterControlData)ì—ì„œ ì»¨íŠ¸ë¡¤ ë°ì´í„° ì• ì…‹ ê°€ì ¸ì˜¤ê¸°
 	UABCharacterControlData* NewCharacterControl = CharacterControlManager[NewCharacterControlType];
 
-	// check ÇÔ¼ö¸¦ ÅëÇØ ÁøÂ¥ ÀÖ´ÂÁö È®ÀÎ
+	// check í•¨ìˆ˜ë¥¼ í†µí•´ ì§„ì§œ ìˆëŠ”ì§€ í™•ì¸
 	check(NewCharacterControl);
 
-	// ±âº» ¼Ó¼º È£Ãâ
+	// ê¸°ë³¸ ì†ì„± í˜¸ì¶œ
 	SetCharacterControlData(NewCharacterControl);
 
-	// ÀÎÇ² ¸ÅÇÎ ÄÁÅØ½ºÆ® º¯°æ½ÃÄÑÁÖ±â
-	// ¹İµå½Ã °¡Á®¿Í¾ßÇÏ±â ¶§¹®¿¡ CastChecked ÇÔ¼ö »ç¿ë
+	// ì¸í’‹ ë§¤í•‘ ì»¨í…ìŠ¤íŠ¸ ë³€ê²½ì‹œì¼œì£¼ê¸°
+	// ë°˜ë“œì‹œ ê°€ì ¸ì™€ì•¼í•˜ê¸° ë•Œë¬¸ì— CastChecked í•¨ìˆ˜ ì‚¬ìš©
 	APlayerController* PlayerController = CastChecked<APlayerController>(GetController());
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 	{
-		// ¹Ù²ãÄ¡±âÇÒ ¶§ ±âÁ¸¿¡ ÀÖ´ø ¸ğµç ÀÎÇ² ¸ÅÇÎ ÄÁÅØ½ºÆ®¸¦ ¸ğµÎ Á¦°ÅÈÄ º¯°æÇÒ ÀÎÇ² ¸ÅÇÎ ÄÁÅØ½ºÆ®·Î Àû¿ë
+		// ë°”ê¿”ì¹˜ê¸°í•  ë•Œ ê¸°ì¡´ì— ìˆë˜ ëª¨ë“  ì¸í’‹ ë§¤í•‘ ì»¨í…ìŠ¤íŠ¸ë¥¼ ëª¨ë‘ ì œê±°í›„ ë³€ê²½í•  ì¸í’‹ ë§¤í•‘ ì»¨í…ìŠ¤íŠ¸ë¡œ ì ìš©
 		Subsystem->ClearAllMappings();
 		UInputMappingContext* NewMappingContext = NewCharacterControl->InputMappingContext;
 		if (NewMappingContext)
@@ -128,7 +128,7 @@ void AABCharacterPlayer::SetChangeCharacterControl(ECharacterControlType NewChar
 		}
 	}
 
-	// ÇöÀç ÄÁÆ®·Ñ Å¸ÀÔÀ» »õ·Î¿î ÄÁÆ®·Ñ µ¥ÀÌÅÍ Å¸ÀÔÀ¸·Î º¯°æ
+	// í˜„ì¬ ì»¨íŠ¸ë¡¤ íƒ€ì…ì„ ìƒˆë¡œìš´ ì»¨íŠ¸ë¡¤ ë°ì´í„° íƒ€ì…ìœ¼ë¡œ ë³€ê²½
 	CurrentCharacterControlType = NewCharacterControlType;
 }
 
@@ -150,21 +150,21 @@ void AABCharacterPlayer::ShoulderMove(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	const FRotator Rotation = Controller->GetControlRotation();		// ¾÷µ¥ÀÌÆ® µÈ Rotation °ªÀ» °¡Á®¿Í¼­
+	const FRotator Rotation = Controller->GetControlRotation();		// ì—…ë°ì´íŠ¸ ëœ Rotation ê°’ì„ ê°€ì ¸ì™€ì„œ
 	const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);		// ÀüÁø ¹æÇâ
-	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);			// ¿À¸¥ÂÊ ¹æÇâ
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);		// ì „ì§„ ë°©í–¥
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);			// ì˜¤ë¥¸ìª½ ë°©í–¥
 
-	AddMovementInput(ForwardDirection, MovementVector.X);		// Ä³¸¯ÅÍ¸¦ ÀÌµ¿½ÃÅ°µµ·Ï ±¸Çö
-	AddMovementInput(RightDirection, MovementVector.Y);			// Ä³¸¯ÅÍ¸¦ ÀÌµ¿½ÃÅ°µµ·Ï ±¸Çö
+	AddMovementInput(ForwardDirection, MovementVector.X);		// ìºë¦­í„°ë¥¼ ì´ë™ì‹œí‚¤ë„ë¡ êµ¬í˜„
+	AddMovementInput(RightDirection, MovementVector.Y);			// ìºë¦­í„°ë¥¼ ì´ë™ì‹œí‚¤ë„ë¡ êµ¬í˜„
 }
 
 void AABCharacterPlayer::ShoulderLook(const FInputActionValue& Value)
 {
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
-	AddControllerYawInput(LookAxisVector.X);		// ÀÔ·Â°ªÀ» ¹Ş¾Æ¼­ ControllerÀÇ Control Rotation ¼Ó¼ºÀ» ¾÷µ¥ÀÌÆ®ÇÏ´Âµ¥ »ç¿ëµÈ´Ù.
+	AddControllerYawInput(LookAxisVector.X);		// ì…ë ¥ê°’ì„ ë°›ì•„ì„œ Controllerì˜ Control Rotation ì†ì„±ì„ ì—…ë°ì´íŠ¸í•˜ëŠ”ë° ì‚¬ìš©ëœë‹¤.
 	AddControllerPitchInput(LookAxisVector.Y);
 }
 
@@ -173,12 +173,12 @@ void AABCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	float InputSizeSquared = MovementVector.SquaredLength();		// ÇöÀç MovementVector ¹Ş±â
+	float InputSizeSquared = MovementVector.SquaredLength();		// í˜„ì¬ MovementVector ë°›ê¸°
 
 	float MovementVectorSize = 1.0f;
 	float MovementVectorSizeSquared = MovementVector.SquaredLength();
 
-	// MovementVector Å©±â°¡ 1ÀÌ µÇµµ·Ï Á¶Á¤
+	// MovementVector í¬ê¸°ê°€ 1ì´ ë˜ë„ë¡ ì¡°ì •
 	if (MovementVectorSizeSquared > 1.0f)
 	{
 		MovementVector.Normalize();
@@ -190,7 +190,7 @@ void AABCharacterPlayer::QuaterMove(const FInputActionValue& Value)
 	}
 
 	FVector MoveDirection = FVector(MovementVector.X, MovementVector.Y, 0.0f);
-	// ÇöÀç ControlRotationÀ» Áö±İ Forward ¹æÇâ(MoveDirection)À¸·Î »ç¿ëÇØ¼­ ÁöÁ¤ÇØÁÖ¸é, ¹«ºê¸ÕÆ® ÄÄÆ÷³ÍÆ®¿¡¼­ ¼³Á¤ÇÑ ¿É¼Ç¿¡ ÀÇÇØ¼­ Ä³¸¯ÅÍ°¡ ÀÚµ¿À¸·Î ÀÌµ¿ÇÏ´Â ¹æÇâÀ¸·Î È¸ÀüÇÏ°Ô µÈ´Ù.
+	// í˜„ì¬ ControlRotationì„ ì§€ê¸ˆ Forward ë°©í–¥(MoveDirection)ìœ¼ë¡œ ì‚¬ìš©í•´ì„œ ì§€ì •í•´ì£¼ë©´, ë¬´ë¸Œë¨¼íŠ¸ ì»´í¬ë„ŒíŠ¸ì—ì„œ ì„¤ì •í•œ ì˜µì…˜ì— ì˜í•´ì„œ ìºë¦­í„°ê°€ ìë™ìœ¼ë¡œ ì´ë™í•˜ëŠ” ë°©í–¥ìœ¼ë¡œ íšŒì „í•˜ê²Œ ëœë‹¤.
 	GetController()->SetControlRotation(FRotationMatrix::MakeFromX(MoveDirection).Rotator());
 	AddMovementInput(MoveDirection, MovementVectorSize);
 }

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -32,7 +32,7 @@ public:
 	FRotator RotationRate;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
-	TObjectPtr<class UInputMappingContext> InputMappingContext;		// ÀÔ·Â ¸ÅÇÎ ÄÁÅØ½ºÆ®¸¦ ´ãÀ» ¸â¹ö º¯¼ö
+	TObjectPtr<class UInputMappingContext> InputMappingContext;		// ì…ë ¥ ë§¤í•‘ ì»¨í…ìŠ¤íŠ¸ë¥¼ ë‹´ì„ ë©¤ë²„ ë³€ìˆ˜
 
 	// SpringArm
 	UPROPERTY(EditAnywhere, Category = SpringArm)

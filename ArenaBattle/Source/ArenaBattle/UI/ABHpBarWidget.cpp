@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "UI/ABHpBarWidget.h"
@@ -10,12 +10,12 @@ UABHpBarWidget::UABHpBarWidget(const FObjectInitializer& ObjectInitializer) : Su
 	MaxHp = -1.0f;
 }
 
-// NativeConstruct ÇÔ¼ö°¡ È£ÃâµÉ ¶§¸é UI¿¡ °ü·ÃµÈ ¸ğµç ±â´ÉµéÀÌ °ÅÀÇ ÃÊ±âÈ­°¡ ¿Ï·áµÆ´Ù°í º¸¸é µÈ´Ù.
+// NativeConstruct í•¨ìˆ˜ê°€ í˜¸ì¶œë  ë•Œë©´ UIì— ê´€ë ¨ëœ ëª¨ë“  ê¸°ëŠ¥ë“¤ì´ ê±°ì˜ ì´ˆê¸°í™”ê°€ ì™„ë£Œëë‹¤ê³  ë³´ë©´ ëœë‹¤.
 void UABHpBarWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	// ¾Æ±î PbHpBar¶ó°í Canvas¿¡ ¼³Á¤ÇÔ
+	// ì•„ê¹Œ PbHpBarë¼ê³  Canvasì— ì„¤ì •í•¨
 	HpProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PbHpBar")));
 	ensure(HpProgressBar);
 
