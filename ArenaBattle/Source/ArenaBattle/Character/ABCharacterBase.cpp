@@ -356,11 +356,23 @@ void AABCharacterBase::EquipWeapon(UABItemData* InItemData)
 		}
 		//Weapon->SetSkeletalMesh(WeaponItemData->WeaponMesh);
 		Weapon->SetSkeletalMesh(WeaponItemData->WeaponMesh.Get());
+		// 무기를 획득하면 ModifierStat 적용할 수 있도록
+		Stat->SetModifierStat(WeaponItemData->ModifierStat);
 	}
 }
 
 void AABCharacterBase::ReadScroll(UABItemData* InItemData)
 {
 	//UE_LOG(LogABCharacter, Log, TEXT("Read Scroll"));
+}
+
+int32 AABCharacterBase::GetLevel()
+{
+	return Stat->GetCurrentLevel();
+}
+
+void AABCharacterBase::SetLevel(int32 InNewLevel)
+{
+	Stat->SetLevelStat(InNewLevel);
 }
 

@@ -28,7 +28,7 @@ AABItemBox::AABItemBox()
 	Trigger->SetBoxExtent(FVector(40.0f, 42.0f, 30.0f));
 
 	// 오버랩되면 발생시킬 함수 바인딩
-	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnOverlapBegin);
+	//Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnOverlapBegin);
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> BoxMeshRef(TEXT("/Script/Engine.StaticMesh'/Game/ArenaBattle/Environment/Props/SM_Env_Breakables_Box1.SM_Env_Breakables_Box1'"));
 	if (BoxMeshRef.Object)
@@ -47,6 +47,7 @@ AABItemBox::AABItemBox()
 }
 
 // ItemBox가 초기화가 된 이후
+// PostInitializeComponents함수도 FinishSpawning 함수 이후에 호출되기 때문에 BeginPlay함수와 동일한 효과를 가지게 된다.
 void AABItemBox::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -71,6 +72,9 @@ void AABItemBox::PostInitializeComponents()
 
 	Item = Cast<UABItemData>(AssetPtr.Get());
 	ensure(Item);
+
+	// 바인딩을 뒤로 미루기 !!
+	Trigger->OnComponentBeginOverlap.AddDynamic(this, &AABItemBox::OnOverlapBegin);
 }
 
 // 바인딩 된 함수 설정 및 로직 구성

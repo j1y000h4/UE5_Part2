@@ -77,6 +77,9 @@ AABStageGimmick::AABStageGimmick()
 		FVector BoxLocation = Stage->GetSocketLocation(GateSocket) / 2;
 		RewardBoxLocations.Add(GateSocket, BoxLocation);
 	}
+
+	// Stage Stat
+	CurrentStageNum = 0;
 }
 
 // 에디터에서 값을 변경하면 실행되는 함수
@@ -125,7 +128,14 @@ void AABStageGimmick::OnGateTriggerBeginOverlap(UPrimitiveComponent* OverlappedC
 	// 아무것도 없다고 판정되었을 때
 	if (!bResult)
 	{
-		GetWorld()->SpawnActor<AABStageGimmick>(NewLocation, FRotator::ZeroRotator);
+		// 지연생성 로직으로 변경
+		FTransform NewTransform(NewLocation);
+		AABStageGimmick* NewGimmick = GetWorld()->SpawnActorDeferred<AABStageGimmick>(AABStageGimmick::StaticClass(), NewTransform);
+		if (NewGimmick)
+		{
+			NewGimmick->SetStageNum(CurrentStageNum + 1);
+			NewGimmick->FinishSpawning(NewTransform);
+		}
 	}
 }
 
@@ -227,15 +237,19 @@ void AABStageGimmick::OnOpponentDestroyed(AActor* DestoryedActor)
 // NPC 소환
 void AABStageGimmick::OnOpponentSpawn()
 {
-	const FVector SpawnLocation = GetActorLocation() + FVector::UpVector * 88.0f;
+	const FTransform SpawnTransform(GetActorLocation() + FVector::UpVector * 88.0f);
 	// OpponentClass를 TSubclassOf로 한정시켰기 때문에 캐릭터에 있는 ABCharacterNonPlayer를 상속받은 캐릭터에 한정해서만 액터를 스폰시키게 된다.
-	AActor* OpponentActor = GetWorld()->SpawnActor(OpponentClass, &SpawnLocation, &FRotator::ZeroRotator);
-	AABCharacterNonPlayer* ABOpponentCharacter = Cast<AABCharacterNonPlayer>(OpponentActor);
+	// SpawnActor -> SpawnActorDeferred 지연생성으로 변경
+	AABCharacterNonPlayer* ABOpponentCharacter = GetWorld()->SpawnActorDeferred<AABCharacterNonPlayer>(OpponentClass, SpawnTransform);
 
 	// 캐스팅이 정상적으로 된다면, OnDestroyed 델리게이트에 함수를 바인드
 	if (ABOpponentCharacter)
 	{
 		ABOpponentCharacter->OnDestroyed.AddDynamic(this, &AABStageGimmick::OnOpponentDestroyed);
+		// NPC가 생성될 때 CurrentStageNum에 따라 Level을 설정할 수 있도록
+		ABOpponentCharacter->SetLevel(CurrentStageNum);
+		// SpawnActorDeferred 지연 생성 완료, 이후 BeginPlay 함수 실행
+		ABOpponentCharacter->FinishSpawning(SpawnTransform);
 	}
 }
 
@@ -270,14 +284,25 @@ void AABStageGimmick::SpawnRewardBoxes()
 	for (const auto& RewardBoxLocation : RewardBoxLocations)
 	{
 		// RewardBox를 스폰해준다. Location, Actor, Casting, Overlap시 발동시킬 함수 추가, 약참조 RewardBoxes에 추가
-		FVector WorldSpawnLocation = GetActorLocation() + RewardBoxLocation.Value + FVector(0.0f, 0.0f, 30.0f);
-		AActor* ItemActor = GetWorld()->SpawnActor(RewardBoxClass, &WorldSpawnLocation, &FRotator::ZeroRotator);
-		AABItemBox* RewardBoxActor = Cast<AABItemBox>(ItemActor);
+		// 지연 생성으로 변경
+		FTransform SpawnTransform(GetActorLocation() + RewardBoxLocation.Value + FVector(0.0f, 0.0f, 30.0f));
+		AABItemBox* RewardBoxActor = GetWorld()->SpawnActorDeferred<AABItemBox>(RewardBoxClass, SpawnTransform);
+
 		if (RewardBoxActor)
 		{
 			RewardBoxActor->Tags.Add(RewardBoxLocation.Key);
+			// 상자에 설정된 델리게이트의 타이밍을 뒤로 미루고 기믹의 진행을 위해서 설정한 델리게이트를 그전에 설정하도록 순서를 변경하기
 			RewardBoxActor->GetTrigger()->OnComponentBeginOverlap.AddDynamic(this, &AABStageGimmick::OnRewardTriggerBeginOverlap);
 			RewardBoxes.Add(RewardBoxActor);
+		}
+	}
+
+	// 초기화가 완료되고 나면 FinishSpawning실행시켜주기
+	for (const auto& RewardBox : RewardBoxes)
+	{
+		if (RewardBox.IsValid())
+		{
+			RewardBox.Get()->FinishSpawning(RewardBox.Get()->GetActorTransform());
 		}
 	}
 }
