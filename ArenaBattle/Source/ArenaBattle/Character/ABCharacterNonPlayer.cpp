@@ -3,10 +3,17 @@
 
 #include "Character/ABCharacterNonPlayer.h"
 #include "Engine/AssetManager.h"		// 에셋 매니저, 비동기 로드 위한
+#include "AI/ABAIController.h"
 
 AABCharacterNonPlayer::AABCharacterNonPlayer()
 {
 	GetMesh()->SetHiddenInGame(true);
+
+	// AIControllerClass를 방금 만든 AABAIController 클래스로 변경
+	AIControllerClass = AABAIController::StaticClass();
+
+	// 배치된 NPC나 아니면 SpawnActor를 통해서 스폰시킨 NPC 두 가지 모두 다 ABAIController에 의해서 통제받도록 설정
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 void AABCharacterNonPlayer::PostInitializeComponents()
