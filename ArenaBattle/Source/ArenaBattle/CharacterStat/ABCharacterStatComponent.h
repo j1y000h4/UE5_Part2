@@ -41,6 +41,7 @@ public:
 	FORCEINLINE FABCharacterStat GetTotalStat() const { return BaseStat + ModifierStat; }
 
 	FORCEINLINE float GetCurrentHp() { return CurrentHp; }
+	FORCEINLINE float GetAttackRadius() const { return AttackRadius; }
 	float ApplyDamage(float InDamage);
 		
 protected:
@@ -57,6 +58,9 @@ protected:
 	// 캐릭터 스텟은 현재 레벨의 정보를 기반으로 해서 게임 싱글톤으로부터 스텟 정보를 제공받게 된다.
 	UPROPERTY(Transient, VisibleInstanceOnly,Category = Stat)
 	float CurrentLevel;
+
+	UPROPERTY(VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
+	float AttackRadius;
 
 	UPROPERTY(Transient, VisibleInstanceOnly, Category = Stat, Meta = (AllowPrivateAccess = "true"))
 	FABCharacterStat BaseStat;

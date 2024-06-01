@@ -64,6 +64,7 @@ protected:
 
 	void ComboActionBegin();		// 몽타주가 시작될 때 호출
 	void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsProperlyEnded);			// 몽타주가 모두 종료가 됐을 때 호출 / 몽타주에 설정된 델리게이트를 통해서 바로 호출될 수 있도록 파라미터 설정
+	virtual void NotifyComboActionEnd();		// 몽타주 없이 공격이 끝났는지를 파악하기 위한 함수
 	void SetComboCheckTimer();		// 타이머를 발동 시킴
 	void ComboCheck();				// 타이머가 발동했을 때 입력이 들어왔는지 체크하는 함수
 

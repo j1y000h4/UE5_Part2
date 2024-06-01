@@ -4,6 +4,7 @@
 #include "Character/ABCharacterNonPlayer.h"
 #include "Engine/AssetManager.h"		// 에셋 매니저, 비동기 로드 위한
 #include "AI/ABAIController.h"
+#include "CharacterStat/ABCharacterStatComponent.h"
 
 AABCharacterNonPlayer::AABCharacterNonPlayer()
 {
@@ -57,4 +58,44 @@ void AABCharacterNonPlayer::NPCMeshLoadCompleted()
 
 	// Handle은 사용 완료후 해지
 	NPCMeshHandle->ReleaseHandle();
+}
+
+// ABCharacterAIInterface 부분
+float AABCharacterNonPlayer::GetAIPatrolRadius()
+{
+	return 800.0f;
+}
+
+float AABCharacterNonPlayer::GetAIDetectRange()
+{
+	return 400.0f;
+}
+
+float AABCharacterNonPlayer::GetAIAttackRange()
+{
+	return Stat->GetTotalStat().AttackRange + Stat->GetAttackRadius() * 2;
+}
+
+float AABCharacterNonPlayer::GetAITurnSpeed()
+{
+	return 2.0f;
+}
+
+void AABCharacterNonPlayer::SetAIAttackDelegate(const FAICharacterAttackFinished& InOnAttackFinished)
+{
+	OnAttackFinished = InOnAttackFinished;
+}
+
+void AABCharacterNonPlayer::AttackByAI()
+{
+	ProcessComboCommand();
+}
+
+// 콤보 공격이 끝났을때 해당 함수가 호출됨
+void AABCharacterNonPlayer::NotifyComboActionEnd()
+{
+	Super::NotifyComboActionEnd();
+
+	// 콤보 공격이 끝났을 때 OnAttackFinished 함수 실행
+	OnAttackFinished.ExecuteIfBound();
 }

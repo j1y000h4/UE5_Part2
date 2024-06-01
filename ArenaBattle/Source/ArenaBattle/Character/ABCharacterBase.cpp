@@ -192,6 +192,15 @@ void AABCharacterBase::ComboActionEnd(UAnimMontage* TargetMontage, bool IsProper
 	ensure(CurrentCombo != 0);
 	CurrentCombo = 0;
 	GetCharacterMovement()->SetMovementMode(EMovementMode::MOVE_Walking);			// 다시 움직임 가능하게 변경
+
+	// 콤보가 끝났을때 호출
+	NotifyComboActionEnd();
+}
+
+// 콤보가 끝났을때 호출
+void AABCharacterBase::NotifyComboActionEnd()
+{
+
 }
 
 // 콤보 타이머를 발동시키는 함수
@@ -245,7 +254,7 @@ void AABCharacterBase::AttackHitCheck()
 
 	// 상수가 아닌 데이터 기반으로 값 변경
 	const float AttackRange = Stat->GetTotalStat().AttackRange;
-	const float AttackRadius = 50.0f;
+	const float AttackRadius = Stat->GetAttackRadius();
 	const float AttackDamage = Stat->GetTotalStat().Attack;
 
 	const FVector Start = GetActorLocation() + GetActorForwardVector() * GetCapsuleComponent()->GetScaledCapsuleRadius();

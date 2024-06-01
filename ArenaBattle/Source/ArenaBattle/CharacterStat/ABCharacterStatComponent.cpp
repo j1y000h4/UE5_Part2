@@ -7,7 +7,9 @@
 // Sets default values for this component's properties
 UABCharacterStatComponent::UABCharacterStatComponent()
 {
+	// 기본값
 	CurrentLevel = 1;
+	AttackRadius = 50.0f;
 }
 
 

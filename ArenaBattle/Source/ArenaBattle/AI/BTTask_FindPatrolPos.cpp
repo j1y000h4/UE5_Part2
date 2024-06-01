@@ -6,6 +6,7 @@
 #include "AI/ABAIController.h"
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Interface/ABCharacterAIInterface.h"
 
 UBTTask_FindPatrolPos::UBTTask_FindPatrolPos()
 {
@@ -33,13 +34,22 @@ EBTNodeResult::Type UBTTask_FindPatrolPos::ExecuteTask(UBehaviorTreeComponent& O
 		return EBTNodeResult::Failed;
 	}
 
+	// NPC를 통해서 필요한 데이터를 받아오기 위함
+	IABCharacterAIInterface* AIPawn = Cast<IABCharacterAIInterface>(ControllingPawn);
+	if (nullptr == AIPawn)
+	{
+		return EBTNodeResult::Failed;
+	}
+
 	// 블랙보드 값 가져오기
 	// Origin은 블랙보드의 HomePos값을 가져오기
 	FVector Origin = OwnerComp.GetBlackboardComponent()->GetValueAsVector(BBKEY_HOMEPOS);
+	float PatrolRadius = AIPawn->GetAIPatrolRadius();
 	FNavLocation NextPatrolPos;
 
 	// NavigationSystem에서 랜덤하게 Point 값을 가져오는 것 (시작위치, 반경, PointLocation을 저장해줄 변수)
-	if (NavSystem->GetRandomPointInNavigableRadius(Origin, 500.0f, NextPatrolPos))
+	// 데이터들을 하드 코딩이 아닌 NPC로부터 받아오도록 변경 (500.0f -> PatrolRadius)
+	if (NavSystem->GetRandomPointInNavigableRadius(Origin, PatrolRadius, NextPatrolPos))
 	{
 		// 블랙보드의 PatrolPos를 NextPatrolPos.Location값으로 넘겨주기
 		// 그러면 성공
