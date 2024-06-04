@@ -11,6 +11,9 @@
 DECLARE_MULTICAST_DELEGATE(FOnHpZeroDelegate);		// Hp가 0일때, 죽었다라는 시그널 델리게이트
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHpChangedDelegate, float /*CurrentHp*/);		// 변경된 현재 Hp 값을 구독한 객체들에게 보내도록 인자 값을 설정
 
+// 스텟이 수정될 때마다 알림을 보내는 델리게이트
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnStatChangedDelegate, const FABCharacterStat& /*BaseStat*/, const FABCharacterStat& /*ModifierStat*/);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class ARENABATTLE_API UABCharacterStatComponent : public UActorComponent
@@ -22,13 +25,13 @@ public:
 	UABCharacterStatComponent();
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
+	virtual void InitializeComponent() override;
 
 public:
 	// 델리게이트 변수 선언
 	FOnHpZeroDelegate OnHpZero;
 	FOnHpChangedDelegate OnHpChanged;
+	FOnStatChangedDelegate OnStatChanged;
 
 	// Stat Section
 	// 레벨을 설정해주는 함수
@@ -36,9 +39,23 @@ public:
 	// 레벨 Getter 함수
 	FORCEINLINE float GetCurrentLevel() const { return CurrentLevel; }
 	// 무기 .. 등을 획득했을때 ModifierStat을 변경해줄 수 있는 Setter 함수
-	FORCEINLINE void SetModifierStat(const FABCharacterStat& InModifierStat) { ModifierStat = InModifierStat; }
+	// BaseStat용 Setter 함수 추가
+	FORCEINLINE void SetBaseStat(const FABCharacterStat& InBaseStat) { BaseStat = InBaseStat;  OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat()); }
+	FORCEINLINE void SetModifierStat(const FABCharacterStat& InModifierStat) { ModifierStat = InModifierStat;  OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat()); }
+
+	// 스텟을 가져올 수 있는 Getter 함수 추가
+	// BaseStat, ModifierStat Getter
+	FORCEINLINE const FABCharacterStat& GetBaseStat() const { return BaseStat; }
+	FORCEINLINE const FABCharacterStat& GetModifierStat() const { return ModifierStat; }
+
 	// 캐릭터의 전체 스텟값을 받아올 수 있도록
 	FORCEINLINE FABCharacterStat GetTotalStat() const { return BaseStat + ModifierStat; }
+
+	// 아이템 효과 함수 (포션)
+	FORCEINLINE void HealHp(float InHealAmount) { CurrentHp = FMath::Clamp(CurrentHp + InHealAmount, 0, GetTotalStat().MaxHp); OnHpChanged.Broadcast(CurrentHp); }
+
+	// 아이템 효과 함수 (스크롤)
+	FORCEINLINE void AddBaseStat(const FABCharacterStat& InAddBaseStat) { BaseStat = BaseStat + InAddBaseStat; OnStatChanged.Broadcast(GetBaseStat(), GetModifierStat()); }
 
 	FORCEINLINE float GetCurrentHp() { return CurrentHp; }
 	FORCEINLINE float GetAttackRadius() const { return AttackRadius; }

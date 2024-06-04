@@ -6,9 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "ABPlayerController.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class ARENABATTLE_API AABPlayerController : public APlayerController
 {
@@ -29,4 +26,5 @@ protected:
 	// 생성한 위젯의 포인터를 담을 변수 선언
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = HUD)
 	TObjectPtr<class UABHUDWidget> ABHUDWidget;
+
 };

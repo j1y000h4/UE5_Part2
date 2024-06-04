@@ -5,13 +5,11 @@
 #include "CoreMinimal.h"
 #include "Character/ABCharacterBase.h"
 #include "InputActionValue.h"		// FInputActionValue 구조체를 사용하기 위함
+#include "Interface/ABCharacterHUDInterface.h"
 #include "ABCharacterPlayer.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class ARENABATTLE_API AABCharacterPlayer : public AABCharacterBase
+class ARENABATTLE_API AABCharacterPlayer : public AABCharacterBase, public IABCharacterHUDInterface
 {
 	GENERATED_BODY()
 	
@@ -20,6 +18,9 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	// Player가 죽었을때 동작하는 함수
+	virtual void SetDead() override;
 
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -67,9 +68,13 @@ protected:
 	// Quater
 	void QuaterMove(const FInputActionValue& Value);
 
+	// 현재 어떤 뷰를 가지고 있는가에 대한 열거형 변수
+	ECharacterControlType CurrentCharacterControlType;
+
 	// Attack
 	void Attack();
 
-	// 현재 어떤 뷰를 가지고 있는가에 대한 열거형 변수
-	ECharacterControlType CurrentCharacterControlType;
+	// UI Section
+protected:
+	virtual void SetupHUDWidget(class UABHUDWidget* InHUDWidget) override;
 };

@@ -28,9 +28,17 @@ void AABCharacterNonPlayer::PostInitializeComponents()
 	NPCMeshHandle = UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(NPCMeshes[RandIndex], FStreamableDelegate::CreateUObject(this, &AABCharacterNonPlayer::NPCMeshLoadCompleted));
 }
 
+// 죽었을 때
 void AABCharacterNonPlayer::SetDead()
 {
 	Super::SetDead();
+
+	// 죽으면 AI를 중단시켜준다.
+	AABAIController* ABAIController = Cast<AABAIController>(GetController());
+	if (ABAIController)
+	{
+		ABAIController->StopAI();
+	}
 
 	FTimerHandle DeadTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(DeadTimerHandle, FTimerDelegate::CreateLambda(

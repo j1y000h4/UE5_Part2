@@ -10,14 +10,15 @@ UABCharacterStatComponent::UABCharacterStatComponent()
 	// 기본값
 	CurrentLevel = 1;
 	AttackRadius = 50.0f;
+
+	// 해당 변수를 true로 설정해야만 InitializeComponent함수를 호출하도록 설계해뒀다. 모든 컴포넌트가 가상 함수를 호출하게 되면 성능상 이슈가 있을수도 있기 때문에
+	bWantsInitializeComponent = true;
 }
 
-
-// Called when the game starts
-void UABCharacterStatComponent::BeginPlay()
+void UABCharacterStatComponent::InitializeComponent()
 {
-	Super::BeginPlay();
-	
+	Super::InitializeComponent();
+
 	SetLevelStat(CurrentLevel);
 	SetHp(BaseStat.MaxHp);
 }
@@ -27,7 +28,10 @@ void UABCharacterStatComponent::SetLevelStat(int32 InNewLevel)
 {
 	// GameSingleton에서 데이터를 가져오기
 	CurrentLevel = FMath::Clamp(InNewLevel, 1, UABGameSingleton::Get().CharacterMaxLevel);
-	BaseStat = UABGameSingleton::Get().GetCharacterStat(CurrentLevel);
+
+	// BaseStat값을 변경하는건 SetBaseStat을 활용해 변경해준다. -> 델리게이트를 통해 브로드캐스팅
+	//BaseStat = UABGameSingleton::Get().GetCharacterStat(CurrentLevel);
+	SetBaseStat(UABGameSingleton::Get().GetCharacterStat(CurrentLevel));
 	check(BaseStat.MaxHp > 0.0f);
 }
 
