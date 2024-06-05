@@ -3,6 +3,7 @@
 
 #include "UI/ABHpBarWidget.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
 #include "Interface/ABCharacterWidgetInterface.h"
 
 UABHpBarWidget::UABHpBarWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -19,6 +20,10 @@ void UABHpBarWidget::NativeConstruct()
 	HpProgressBar = Cast<UProgressBar>(GetWidgetFromName(TEXT("PbHpBar")));
 	ensure(HpProgressBar);
 
+	// TextBlock
+	HpStat = Cast<UTextBlock>(GetWidgetFromName(TEXT("TxtHpStat")));
+	ensure(HpStat);
+
 	IABCharacterWidgetInterface* CharacterWidget = Cast<IABCharacterWidgetInterface>(OwningActor);
 	if (CharacterWidget)
 	{
@@ -26,11 +31,41 @@ void UABHpBarWidget::NativeConstruct()
 	}
 }
 
+// Stat이 변경되면 HpBar와 변경된 Stat이 반영되도록
+void UABHpBarWidget::UpdateStat(const FABCharacterStat& BaseStat, const FABCharacterStat& ModifierStat)
+{
+	MaxHp = (BaseStat + ModifierStat).MaxHp;
+
+	if (HpProgressBar)
+	{
+		HpProgressBar->SetPercent(CurrentHp / MaxHp);
+	}
+
+	if (HpStat)
+	{
+		HpStat->SetText(FText::FromString(GetHpStatText()));
+	}
+}
+
+// Stat이 변경되면 HpBar와 변경된 Stat이 반영되도록
 void UABHpBarWidget::UpdateHpBar(float NewCurrentHp)
 {
+	CurrentHp = NewCurrentHp;
+
 	ensure(MaxHp > 0.0f);
 	if (HpProgressBar)
 	{
-		HpProgressBar->SetPercent(NewCurrentHp / MaxHp);
+		HpProgressBar->SetPercent(CurrentHp / MaxHp);
 	}
+
+	if (HpStat)
+	{
+		HpStat->SetText(FText::FromString(GetHpStatText()));
+	}
+}
+
+// HpBar의 Text가 100/100 형태로 나올 수 있도록
+FString UABHpBarWidget::GetHpStatText()
+{
+	return FString::Printf(TEXT("%.0f/%.0f"), CurrentHp, MaxHp);
 }

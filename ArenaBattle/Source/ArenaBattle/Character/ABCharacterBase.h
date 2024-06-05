@@ -116,7 +116,7 @@ protected:
 
 	virtual void TakeItem(class UABItemData* InItemData) override;
 	// TakeItemActions에 바인딩될 함수들
-	virtual void DrinkPostion(class UABItemData* InItemData);
+	virtual void DrinkPotion(class UABItemData* InItemData);
 	virtual void EquipWeapon(class UABItemData* InItemData);
 	virtual void ReadScroll(class UABItemData* InItemData);
 

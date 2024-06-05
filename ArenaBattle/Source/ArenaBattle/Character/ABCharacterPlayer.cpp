@@ -10,6 +10,8 @@
 #include "ABCharacterControlData.h"
 #include "UI/ABHUDWidget.h"
 #include "CharacterStat/ABCharacterStatComponent.h"
+#include "Interface/ABGameInterface.h"
+#include "GameFramework/GameModeBase.h"
 
 AABCharacterPlayer::AABCharacterPlayer()		// 생성자
 {
@@ -93,6 +95,13 @@ void AABCharacterPlayer::SetDead()
 	if (PlayerController)
 	{
 		DisableInput(PlayerController);
+
+		// 플레이어가 죽으면 게임이 종료되도록 GameMode를 통해 전달하기
+		IABGameInterface* ABGameMode = Cast<IABGameInterface>(GetWorld()->GetAuthGameMode());
+		if (ABGameMode)
+		{
+			ABGameMode->OnPlayerDead();
+		}
 	}
 }
 

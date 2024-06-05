@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ABUserWidget.h"
+#include "GameData/ABCharacterStat.h"
 #include "ABHpBarWidget.generated.h"
 
 /**
@@ -24,12 +25,22 @@ protected:
 	virtual void NativeConstruct() override;
 
 public:
-	FORCEINLINE void SetMaxHp(float NewMaxHp) { MaxHp = NewMaxHp; }
+	//FORCEINLINE void SetMaxHp(float NewMaxHp) { MaxHp = NewMaxHp; }
+	void UpdateStat(const FABCharacterStat& BaseStat, const FABCharacterStat& ModifierStat);
 	void UpdateHpBar(float NewCurrentHp);
+
+	// 100/100 형태로 텍스트가 바로 만들어질 수 있도록 하는 함수
+	FString GetHpStatText();
 
 protected:
 	UPROPERTY()
 	TObjectPtr<class UProgressBar> HpProgressBar;		// Build Dependency에서 UMG 추가하기
+
+	UPROPERTY()
+	TObjectPtr<class UTextBlock> HpStat;
+
+	UPROPERTY()
+	float CurrentHp;
 
 	UPROPERTY()
 	float MaxHp;

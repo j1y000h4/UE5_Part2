@@ -7,6 +7,8 @@
 #include "Physics/ABCollision.h"
 #include "Character/ABCharacterNonPlayer.h"
 #include "Item/ABItemBox.h"
+#include "Interface/ABGameInterface.h"
+#include "GameFramework/GameModeBase.h"
 
 // Sets default values
 AABStageGimmick::AABStageGimmick()
@@ -231,6 +233,19 @@ void AABStageGimmick::SetChooseNext()
 // NPC가 죽었을 때
 void AABStageGimmick::OnOpponentDestroyed(AActor* DestoryedActor)
 {
+	// 점수가 추가되는 구간, GameMode를 가져온다.
+	// 인터페이스를 통한 간접 참고
+	IABGameInterface* ABGameMode = Cast<IABGameInterface>(GetWorld()->GetAuthGameMode());
+	if (ABGameMode)
+	{
+		ABGameMode->OnPlayerScoreChanged(CurrentStageNum);
+
+		if (ABGameMode->IsGameCleared())
+		{
+			return;
+		}
+	}
+
 	SetState(EStageState::REWARD);
 }
 

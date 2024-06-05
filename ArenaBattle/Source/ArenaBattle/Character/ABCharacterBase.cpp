@@ -112,7 +112,7 @@ AABCharacterBase::AABCharacterBase()		// 생성자
 	// Item Action
 	// 인자를 받는 생성자에 즉석에서 생성해서 TakeItemActions 배열에 집어넣기 (열거형 순)
 	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AABCharacterBase::EquipWeapon)));
-	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AABCharacterBase::DrinkPostion)));
+	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AABCharacterBase::DrinkPotion)));
 	TakeItemActions.Add(FTakeItemDelegateWrapper(FOnTakeItemDelegate::CreateUObject(this, &AABCharacterBase::ReadScroll)));
 
 	// Weapon Component
@@ -328,11 +328,12 @@ void AABCharacterBase::SetupCharacterWidget(UABUserWidget* InUserWidget)
 	if (HpBarWidget)
 	{
 		// 위젯을 업데이트
-		HpBarWidget->SetMaxHp(Stat->GetTotalStat().MaxHp);
+		HpBarWidget->UpdateStat(Stat->GetBaseStat(), Stat->GetModifierStat());
 		HpBarWidget->UpdateHpBar(Stat->GetCurrentHp());
 
 		// 앞으로 Stat의 CurrentHp 값이 변경될 때마다 이 UpdateHpBar 함수가 호출되도록 Stat의 델리게이트에 해당 인스턴스의 멤버함수를 등록하도록 -> 두 컴포넌트간의 느슨한 결합
 		Stat->OnHpChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateHpBar);
+		Stat->OnStatChanged.AddUObject(HpBarWidget, &UABHpBarWidget::UpdateStat);
 	}
 }
 
@@ -347,8 +348,8 @@ void AABCharacterBase::TakeItem(UABItemData* InItemData)
 	}
 }
 
-// Postion 획득
-void AABCharacterBase::DrinkPostion(UABItemData* InItemData)
+// Potion 획득
+void AABCharacterBase::DrinkPotion(UABItemData* InItemData)
 {
 	UABPotionItemData* PotionItemData = Cast<UABPotionItemData>(InItemData);
 	if (PotionItemData)

@@ -2,18 +2,11 @@
 
 
 #include "Game/ABGameMode.h"
-#include "ABGameMode.h"
+//#include "ABGameMode.h"
+#include "Player/ABPlayerController.h"
 
 AABGameMode::AABGameMode()
 {
-	//static ConstructorHelpers::FClassFinder<APawn> ThirdPersonClassRef(TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter.BP_ThirdPersonCharacter_C"));		// 클래스형에 대해서는 Copy Reference로 들고온 에셋주소의 ''는 생략해 주고 경로만 입력해주고, 클래스 정보를 가져올 것이기 때문에 _C를 붙여 준다.
-
-	//if (ThirdPersonClassRef.Class)
-	//{
-	//	DefaultPawnClass = ThirdPersonClassRef.Class;
-	//}
-	// DefaultPawnClass
-
 	static ConstructorHelpers::FClassFinder<APawn> DefaultPawnClassRef(TEXT("/Script/Engine.Blueprint'/Game/ArenaBattle/Blueprint/BP_ABCharacterPlayer.BP_ABCharacterPlayer_C'"));
 	if (DefaultPawnClassRef.Class)
 	{
@@ -26,4 +19,52 @@ AABGameMode::AABGameMode()
 	{
 		PlayerControllerClass = PlayerControllerRef.Class;		// 이 경우 에셋으로부터 직접 참조를 받기 때문에 헤더 파일의 의존성을 줄일 수 있다.
 	}
+
+	ClearScrore = 3;
+
+	// CurrentScore의 경우 게임의 규모가 조금 더 커진다면 PlayerState같은 객체에 보관하는 것이 좋다.
+	CurrentScore = 0;
+	bIsCleared = false;
+}
+
+// 플레이어의 현재 점수가 변경되었을 때
+void AABGameMode::OnPlayerScoreChanged(int32 NewPlayerScore)
+{
+	CurrentScore = NewPlayerScore;
+
+	// 스코어가 변했을 때 신호를 날려주기 위한
+	// 1인 플레이기 때문에 FirstPlayerController를 가져와도 된다.
+	AABPlayerController* ABPlayerController = Cast<AABPlayerController>(GetWorld()->GetFirstPlayerController());
+	if (ABPlayerController)
+	{
+		ABPlayerController->GameScoreChanged(CurrentScore);
+	}
+
+	// 게임을 클리어했을 때
+	if (CurrentScore >= ClearScrore)
+	{
+		bIsCleared = true;
+
+		if (ABPlayerController)
+		{
+			ABPlayerController->GameClear();
+		}
+	}
+}
+
+// 플레이어가 죽었을 때
+void AABGameMode::OnPlayerDead()
+{
+	// 플레이어가 죽었을 때 관련된 UI를 날리는 이벤트를 PlayerController에게 알려주기 위한
+	AABPlayerController* ABPlayerController = Cast<AABPlayerController>(GetWorld()->GetFirstPlayerController());
+	if (ABPlayerController)
+	{
+		ABPlayerController->GameOver();
+	}
+}
+
+// 현재 게임을 클리어 하였는가?
+bool AABGameMode::IsGameCleared()
+{
+	return bIsCleared;
 }
