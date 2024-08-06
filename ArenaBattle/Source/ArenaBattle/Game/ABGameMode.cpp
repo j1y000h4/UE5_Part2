@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Game/ABGameMode.h"
@@ -13,34 +13,35 @@ AABGameMode::AABGameMode()
 		DefaultPawnClass = DefaultPawnClassRef.Class;
 	}
 
-	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerRef(TEXT("/Script/ArenaBattle.ABPlayerController"));		// À§¿Í µ¿ÀÏÇÏ°Ô Àû¿ë. ÀÌ °æ¿ì ±âº»À¸·Î Å¬·¡½º Á¤º¸°¡ º¹Á¦µÈ °ÍÀÌ±â ¶§¹®¿¡ _C¸¦ ºÙÀÌÁö ¾Ê¾Æµµ µÈ´Ù.
+	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerRef(TEXT("/Script/ArenaBattle.ABPlayerController"));		// ìœ„ì™€ ë™ì¼í•˜ê²Œ ì ìš©. ì´ ê²½ìš° ê¸°ë³¸ìœ¼ë¡œ í´ë˜ìŠ¤ ì •ë³´ê°€ ë³µì œëœ ê²ƒì´ê¸° ë•Œë¬¸ì— _Cë¥¼ ë¶™ì´ì§€ ì•Šì•„ë„ ëœë‹¤.
 
 	if (PlayerControllerRef.Class)
 	{
-		PlayerControllerClass = PlayerControllerRef.Class;		// ÀÌ °æ¿ì ¿¡¼ÂÀ¸·ÎºÎÅÍ Á÷Á¢ ÂüÁ¶¸¦ ¹Ş±â ¶§¹®¿¡ Çì´õ ÆÄÀÏÀÇ ÀÇÁ¸¼ºÀ» ÁÙÀÏ ¼ö ÀÖ´Ù.
+		PlayerControllerClass = PlayerControllerRef.Class;		// ì´ ê²½ìš° ì—ì…‹ìœ¼ë¡œë¶€í„° ì§ì ‘ ì°¸ì¡°ë¥¼ ë°›ê¸° ë•Œë¬¸ì— í—¤ë” íŒŒì¼ì˜ ì˜ì¡´ì„±ì„ ì¤„ì¼ ìˆ˜ ìˆë‹¤.
 	}
 
+	// ClearScore == CurrentScoreì´ë©´ ê²Œì„ ì¢…ë£Œ
 	ClearScrore = 3;
 
-	// CurrentScoreÀÇ °æ¿ì °ÔÀÓÀÇ ±Ô¸ğ°¡ Á¶±İ ´õ Ä¿Áø´Ù¸é PlayerState°°Àº °´Ã¼¿¡ º¸°üÇÏ´Â °ÍÀÌ ÁÁ´Ù.
+	// CurrentScoreì˜ ê²½ìš° ê²Œì„ì˜ ê·œëª¨ê°€ ì¡°ê¸ˆ ë” ì»¤ì§„ë‹¤ë©´ PlayerStateê°™ì€ ê°ì²´ì— ë³´ê´€í•˜ëŠ” ê²ƒì´ ì¢‹ë‹¤.
 	CurrentScore = 0;
 	bIsCleared = false;
 }
 
-// ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç Á¡¼ö°¡ º¯°æµÇ¾úÀ» ¶§
+// í”Œë ˆì´ì–´ì˜ í˜„ì¬ ì ìˆ˜ê°€ ë³€ê²½ë˜ì—ˆì„ ë•Œ
 void AABGameMode::OnPlayerScoreChanged(int32 NewPlayerScore)
 {
 	CurrentScore = NewPlayerScore;
 
-	// ½ºÄÚ¾î°¡ º¯ÇßÀ» ¶§ ½ÅÈ£¸¦ ³¯·ÁÁÖ±â À§ÇÑ
-	// 1ÀÎ ÇÃ·¹ÀÌ±â ¶§¹®¿¡ FirstPlayerController¸¦ °¡Á®¿Íµµ µÈ´Ù.
+	// ìŠ¤ì½”ì–´ê°€ ë³€í–ˆì„ ë•Œ ì‹ í˜¸ë¥¼ ë‚ ë ¤ì£¼ê¸° ìœ„í•œ
+	// 1ì¸ í”Œë ˆì´ê¸° ë•Œë¬¸ì— FirstPlayerControllerë¥¼ ê°€ì ¸ì™€ë„ ëœë‹¤.
 	AABPlayerController* ABPlayerController = Cast<AABPlayerController>(GetWorld()->GetFirstPlayerController());
 	if (ABPlayerController)
 	{
 		ABPlayerController->GameScoreChanged(CurrentScore);
 	}
 
-	// °ÔÀÓÀ» Å¬¸®¾îÇßÀ» ¶§
+	// ê²Œì„ì„ í´ë¦¬ì–´í–ˆì„ ë•Œ
 	if (CurrentScore >= ClearScrore)
 	{
 		bIsCleared = true;
@@ -52,10 +53,10 @@ void AABGameMode::OnPlayerScoreChanged(int32 NewPlayerScore)
 	}
 }
 
-// ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ» ¶§
+// í”Œë ˆì´ì–´ê°€ ì£½ì—ˆì„ ë•Œ
 void AABGameMode::OnPlayerDead()
 {
-	// ÇÃ·¹ÀÌ¾î°¡ Á×¾úÀ» ¶§ °ü·ÃµÈ UI¸¦ ³¯¸®´Â ÀÌº¥Æ®¸¦ PlayerController¿¡°Ô ¾Ë·ÁÁÖ±â À§ÇÑ
+	// í”Œë ˆì´ì–´ê°€ ì£½ì—ˆì„ ë•Œ ê´€ë ¨ëœ UIë¥¼ ë‚ ë¦¬ëŠ” ì´ë²¤íŠ¸ë¥¼ PlayerControllerì—ê²Œ ì•Œë ¤ì£¼ê¸° ìœ„í•œ
 	AABPlayerController* ABPlayerController = Cast<AABPlayerController>(GetWorld()->GetFirstPlayerController());
 	if (ABPlayerController)
 	{
@@ -63,7 +64,7 @@ void AABGameMode::OnPlayerDead()
 	}
 }
 
-// ÇöÀç °ÔÀÓÀ» Å¬¸®¾î ÇÏ¿´´Â°¡?
+// í˜„ì¬ ê²Œì„ì„ í´ë¦¬ì–´ í•˜ì˜€ëŠ”ê°€?
 bool AABGameMode::IsGameCleared()
 {
 	return bIsCleared;

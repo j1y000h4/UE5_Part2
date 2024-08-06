@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Player/ABPlayerController.h"
@@ -6,11 +6,11 @@
 #include "Kismet/GameplayStatics.h"
 #include "ABSaveGame.h"
 
-//DEFINE_LOG_CATEGORY(LogABPlayerController);
+DEFINE_LOG_CATEGORY(LogABPlayerController); 
 
 AABPlayerController::AABPlayerController()
 {
-	// Å¬·¡½º Á¤º¸¸¦ ºÒ·¯ ÀúÀå
+	// í´ë˜ìŠ¤ ì •ë³´ë¥¼ ë¶ˆëŸ¬ ì €ì¥
 	/*static ConstructorHelpers::FClassFinder<UABHUDWidget> ABHUDWidgetRef(TEXT("/Game/ArenaBattle/UI/WBP_ABHUD.WBP_ABHUD_C"));
 	if (ABHUDWidgetRef.Class)
 	{
@@ -20,43 +20,43 @@ AABPlayerController::AABPlayerController()
 
 void AABPlayerController::GameScoreChanged(int32 NewScore)
 {
-	//K2_OnScoreChanged(NewScore);
+	K2_OnScoreChanged(NewScore);
 }
 
 void AABPlayerController::GameClear()
 {
-	//K2_OnGameClear();
+	K2_OnGameClear();
 }
 
 void AABPlayerController::GameOver()
 {
-	//K2_OnGameOver();
+	K2_OnGameOver();
 
-	// °ÔÀÓÀÌ ³¡³ª¸é ÀúÀåÇÏ±â
-	/*if (!UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("Player0"), 0))
+	// ê²Œì„ì´ ëë‚˜ë©´ ì €ì¥í•˜ê¸°
+	if (!UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("Player0"), 0))
 	{
 		UE_LOG(LogABPlayerController, Error, TEXT("Save Game Error!"));
 	}
 
-	K2_OnGameRetryCount(SaveGameInstance->RetryCount);*/
+	K2_OnGameRetryCount(SaveGameInstance->RetryCount);
 }
 
 void AABPlayerController::BeginPlay()
 {
-	Super::BeginPlay();		// overrideÀÇ °æ¿ì Super ºÙÀÌ±â
+	Super::BeginPlay();		// overrideì˜ ê²½ìš° Super ë¶™ì´ê¸°
 
-	FInputModeGameOnly GameOnlyInputMode;		// ±¸Á¶Ã¼ ¼±¾ğ
-	SetInputMode(GameOnlyInputMode);			// ±¸Á¶Ã¼ ³Ñ±â±â (½ÃÀÛÇÏÀÚ¸¶ÀÚ Æ÷Ä¿½º°¡ ºä Æ÷Æ® ¾ÈÀ¸·Î µé¾î°¡°Ô µÈ´Ù.)
+	FInputModeGameOnly GameOnlyInputMode;		// êµ¬ì¡°ì²´ ì„ ì–¸
+	SetInputMode(GameOnlyInputMode);			// êµ¬ì¡°ì²´ ë„˜ê¸°ê¸° (ì‹œì‘í•˜ìë§ˆì í¬ì»¤ìŠ¤ê°€ ë·° í¬íŠ¸ ì•ˆìœ¼ë¡œ ë“¤ì–´ê°€ê²Œ ëœë‹¤.)
 
-	// BP¿¡¼­ ÀÛ¼º
-	//// °ÔÀÓÀÌ ½ÃÀÛµÇ¸é À§Á¬À» »ı¼º
+	// BPì—ì„œ ì‘ì„±
+	//// ê²Œì„ì´ ì‹œì‘ë˜ë©´ ìœ„ì ¯ì„ ìƒì„±
 	//ABHUDWidget = CreateWidget<UABHUDWidget>(this, ABHUDWidgetClass);
 	//if (ABHUDWidget)
 	//{
 	//	ABHUDWidget->AddToViewport();
 	//}
 
-	/*SaveGameInstance = Cast<UABSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("Player0"), 0));
+	SaveGameInstance = Cast<UABSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("Player0"), 0));
 	if (SaveGameInstance)
 	{
 		SaveGameInstance->RetryCount++;
@@ -66,5 +66,5 @@ void AABPlayerController::BeginPlay()
 		SaveGameInstance = NewObject<UABSaveGame>();
 	}
 
-	K2_OnGameRetryCount(SaveGameInstance->RetryCount);*/
+	K2_OnGameRetryCount(SaveGameInstance->RetryCount);
 }

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -16,9 +16,10 @@ class ARENABATTLE_API AABPlayerController : public APlayerController
 public:
 	AABPlayerController();
 
-	// ¸ğµç UI¸¦ C++·Î Ã³¸®ÇÏ±â¿¡´Â ÇÑ°è°¡ ÀÖ´Ù. ºí·çÇÁ¸°Æ®·Î Ã³¸®ÇÏ±â À§ÇÑ
-	// ºí·çÇÁ¸°Æ®¿¡¼­ ¾î¶² ÀÌº¥Æ®¸¦ ¹ßµ¿½ÃÅ°´Â °ÍÃ³·³ ±â´ÉÀ» ¼öÇàÇÏ±â À§ÇÑ Å°¿öµå (BlueprintImplementableEvent)
-	// UFUNCTION ¸ÅÅ©·Î¸¦ °¡Áö°í ÀÚµ¿À¸·Î ÀÌº¥Æ®¸¦ °¨Áö 
+	// ëª¨ë“  UIë¥¼ C++ë¡œ ì²˜ë¦¬í•˜ê¸°ì—ëŠ” í•œê³„ê°€ ìˆë‹¤. ë¸”ë£¨í”„ë¦°íŠ¸ë¡œ ì²˜ë¦¬í•˜ê¸° ìœ„í•œ
+	// ë¸”ë£¨í”„ë¦°íŠ¸ì—ì„œ ì–´ë–¤ ì´ë²¤íŠ¸ë¥¼ ë°œë™ì‹œí‚¤ëŠ” ê²ƒì²˜ëŸ¼ ê¸°ëŠ¥ì„ ìˆ˜í–‰í•˜ê¸° ìœ„í•œ í‚¤ì›Œë“œ (BlueprintImplementableEvent)
+	// UFUNCTION ë§¤í¬ë¡œë¥¼ ê°€ì§€ê³  ìë™ìœ¼ë¡œ ì´ë²¤íŠ¸ë¥¼ ê°ì§€ 
+	// K2ëŠ” ë¸”ë£¨í”„ë¦°íŠ¸ì˜ ì „ì‹ ì¸ Kismetì˜ ì•½ì
 	UFUNCTION(BlueprintImplementableEvent, Category = Game, Meta = (DisplayName = "OnScoreChangedCpp"))
 	void K2_OnScoreChanged(int32 NewScore);
 	UFUNCTION(BlueprintImplementableEvent, Category = Game, Meta = (DisplayName = "OnGameClearCpp"))
@@ -28,7 +29,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = Game, Meta = (DisplayName = "OnGameRetryCountCpp"))
 	void K2_OnGameRetryCount(int32 NewRetryCount);
 
-	// GameMode°¡ »ç¿ëÇÒ ÇÔ¼öµé
+	// GameModeê°€ ì‚¬ìš©í•  í•¨ìˆ˜ë“¤
 	void GameScoreChanged(int32 NewScore);
 	void GameClear();
 	void GameOver();
@@ -38,11 +39,11 @@ protected:
 
 	// HUD Section
 protected:
-	// Å¬·¡½º Á¤º¸ º¯¼ö ¼±¾ğ, À§Á¬À» »ı¼ºÇÒ ¶§ Å¬·¡½º Á¤º¸¸¦ ³Ñ°Ü¾ßÇÑ´Ù.
+	// í´ë˜ìŠ¤ ì •ë³´ ë³€ìˆ˜ ì„ ì–¸, ìœ„ì ¯ì„ ìƒì„±í•  ë•Œ í´ë˜ìŠ¤ ì •ë³´ë¥¼ ë„˜ê²¨ì•¼í•œë‹¤.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite,Category = HUD)
 	TSubclassOf<class UABHUDWidget> ABHUDWidgetClass;
 
-	// »ı¼ºÇÑ À§Á¬ÀÇ Æ÷ÀÎÅÍ¸¦ ´ãÀ» º¯¼ö ¼±¾ğ
+	// ìƒì„±í•œ ìœ„ì ¯ì˜ í¬ì¸í„°ë¥¼ ë‹´ì„ ë³€ìˆ˜ ì„ ì–¸
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = HUD)
 	TObjectPtr<class UABHUDWidget> ABHUDWidget;
 

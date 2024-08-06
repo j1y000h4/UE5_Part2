@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -19,15 +19,15 @@ public:
 	virtual void OnPlayerDead() override;
 	virtual bool IsGameCleared() override;
 	
-	// °ÔÀÓÀ» Å¬¸®¾îÇÏ±â À§ÇÑ Á¶°ÇÀ» À§ÇÑ Á¡¼ö
-	// ÇöÀç ÁøÇàµÇ°í ÀÖ´Â °ÔÀÓÀÇ Á¡¼ö
+	// ê²Œì„ì„ í´ë¦¬ì–´í•˜ê¸° ìœ„í•œ ì¡°ê±´ì„ ìœ„í•œ ì ìˆ˜
+	// í˜„ì¬ ì§„í–‰ë˜ê³  ìˆëŠ” ê²Œì„ì˜ ì ìˆ˜
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = Game)
 	int32 ClearScrore;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Game)
 	int32 CurrentScore;
 
-	// °ÔÀÓÀ» Å¬¸®¾îÇß´ÂÁö ÆÇ´ÜÇÏ±â À§ÇÑ º¯¼ö
+	// ê²Œì„ì„ í´ë¦¬ì–´í–ˆëŠ”ì§€ íŒë‹¨í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 	UPROPERTY(VisibleInstanceOnly,BlueprintReadOnly, Category = Game)
 	uint8 bIsCleared : 1;
 };
